@@ -1,0 +1,16 @@
+resources:
+  limits:
+    memory: "64Gi"
+    cpu: "1"
+    nvidia.com/gpu: 1
+
+nodeSelector:
+  nodetype: gpu
+  gpuspecs: A100_40GB
+tolerations:
+- effect: NoSchedule
+  operator: Equal
+  value: "gpu"
+  key: "nodetype"
+
+modelName: mistralai/Mistral-7B-v0.1

@@ -10,7 +10,7 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: v0.1.0
 
-modelName: neuralmagic/Llama-2-7b-pruned70-retrained-ultrachat-quant-ds
+modelName: mistralai/Mistral-7B-v0.1
 
 nameOverride: ""
 fullnameOverride: ""
@@ -37,27 +37,17 @@ service:
 
 resources:
   {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
 
-livenessProbe:
-  httpGet:
-    path: /health
-    name: http
-  initialDelaySeconds: 5
-  periodSeconds: 5
+# livenessProbe:
+#   httpGet:
+#     path: /health
+#     port: http
+#   initialDelaySeconds: 5
+#   periodSeconds: 5
 readinessProbe:
   httpGet:
     path: /health
-    name: http
+    port: http
   initialDelaySeconds: 5
   periodSeconds: 5
 
