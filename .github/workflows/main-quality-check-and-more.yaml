@@ -1,0 +1,26 @@
+name: Quality Checks
+on:
+  push:
+    branches: [main]
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.14.3
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check quality
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements-dev.txt
+          make quality
