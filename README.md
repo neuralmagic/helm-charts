@@ -11,4 +11,4 @@ Once Helm is set up properly, add the repository as follows:
 helm repo add nm-vllm https://neuralmagic.github.io/helm-charts
 ```
 
-You can then run `helm search repo nm-vllm` to see the charts. 
+You can then run `helm search repo nm-vllm` to see the charts.
