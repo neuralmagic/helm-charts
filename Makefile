@@ -5,3 +5,7 @@ quality:
 	@echo ""
 	@echo "Validating charts/nm-vllm yaml produced from default values..."
 	helm template charts/nm-vllm | yamllint -
+
+# style the code according to accepted standards for the repo
+style:
+	pre-commit run --all-files -c .pre-commit-config.yaml
