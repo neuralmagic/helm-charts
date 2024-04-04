@@ -54,3 +54,9 @@ jobs:
           fi
 
           make quality
+
+      - name: Run python tests
+        run: |
+          source venv/bin/activate
+
+          pytest
