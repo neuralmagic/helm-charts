@@ -22,9 +22,35 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Check quality
+      - name: Install requirements
         run: |
           python -m venv venv
           source venv/bin/activate
           pip install -r requirements.txt
+
+      - name: Check requirements are up to date
+        run: |
+          source venv/bin/activate
+
+          pip install .
+          pip uninstall -y helm-charts-dev
+          pip freeze > requirements.txt
+
+          if ! `git diff --exit-code -s`; then
+            echo "Files were changed by 'pip freeze'! Please run 'pip freeze' and commit changes."
+            git diff
+            exit 1
+          fi
+
+      - name: Check style and quality
+        run: |
+          source venv/bin/activate
+
+          make style
+          if ! `git diff --exit-code -s`; then
+            echo "Files were changed by 'make style'! Please run 'make style' and commit changes."
+            git diff
+            exit 1
+          fi
+
           make quality
