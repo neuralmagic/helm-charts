@@ -22,7 +22,7 @@ dependencies = [
   "mypy~=1.8.0",
   "pep8-naming==0.13.2",
   "pre-commit~=2.20.0",
-  "pytest-helm-templates==0.0.1a1",
+  "pytest-helm-templates==0.0.1a2",
   "pytest-watcher~=0.4.2",
   "pytest~=8.1.1",
   "removestar==1.3.1",
