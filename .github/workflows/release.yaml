@@ -19,10 +19,11 @@ jobs:
           # Use authorized token so we can write back tags, etc.
           token: ${{ secrets.CICD_GITHUB_PAT || secrets.GITHUB_TOKEN || secrets.CR_TOKEN }}
 
-      - name: Configure Git
+      - env:
+          RELEASE_ACTOR_NAME_FROM_REPO: "${{ vars.RELEASE_ACTOR_NAME }}"
+          RELEASE_ACTOR_EMAIL_FROM_REPO: "${{ vars.RELEASE_ACTOR_EMAIL }}"
+        name: Configure Git
         run: |
-          RELEASE_ACTOR_NAME_FROM_REPO="${{ vars.RELEASE_ACTOR_NAME }}"
-          RELEASE_ACTOR_EMAIL_FROM_REPO="${{ vars.RELEASE_ACTOR_EMAIL }}"
           RELEASE_ACTOR_NAME="${RELEASE_ACTOR_NAME_FROM_REPO:-$GITHUB_ACTOR}"
           RELEASE_ACTOR_EMAIL="${RELEASE_ACTOR_EMAIL_FROM_REPO:-$GITHUB_ACTOR@users.noreply.github.com}"
           git config user.name "$RELEASE_ACTOR_NAME"
@@ -33,19 +34,19 @@ jobs:
         with:
           version: v3.14.3
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
-        env:
-          CR_TOKEN: "${{ secrets.CICD_GITHUB_PAT || secrets.GITHUB_TOKEN || secrets.CR_TOKEN }}"
+      - env:
+          CR_TOKEN: "${{ secrets.CR_TOKEN || secrets.GITHUB_TOKEN || secrets.CICD_GITHUB_PAT }}"
           CR_SKIP_EXISTING: true
           CR_GENERATE_RELEASE_NOTES: true
+        name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
 
-      - name: Add tag and release for given version
+      - env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN || secrets.CICD_GITHUB_PAT }}"
+          RELEASE_NAME: "v${{ inputs.version }}"
+        name: Add tag and release for given version
         run: |
-          RELEASE_NAME="v${{ inputs.version }}"
           git tag -m "$RELEASE_NAME" "$RELEASE_NAME"
           git push origin "$RELEASE_NAME"
 
-          TOKEN="${{ secrets.CICD_GITHUB_PAT || secrets.GITHUB_TOKEN || secrets.CR_TOKEN }}"
-          echo -n "$TOKEN" | gh auth login --with-token
           gh release create --generate-notes --target "$GITHUB_REF" --title "$RELEASE_NAME" "$RELEASE_NAME"
