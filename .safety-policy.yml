@@ -1,0 +1,3 @@
+security:
+  continue-on-vulnerability-error: False
+  ignore-vulnerabilities:
