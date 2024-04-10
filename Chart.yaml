@@ -1,0 +1,9 @@
+apiVersion: v2
+appVersion: "v0.1.0"
+dependencies:
+- name: nm-vllm
+  version: '*.*.*'
+description: A Helm chart for nm-vllm server deployment
+name: nm-vllm
+type: application
+version: 0.1.0
