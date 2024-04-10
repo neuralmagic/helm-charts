@@ -1,0 +1,3 @@
+# -- (object) Configuration for the nm-vllm server deployment and service.
+# @default -- --
+nm-vllm:

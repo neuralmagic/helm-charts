@@ -13,4 +13,4 @@ style:
 .PHONY: docs
 docs: ## Build helm chart documentation
 	@docker pull jnorwood/helm-docs:latest
-	@docker run --rm --volume "$$(pwd):/helm-docs" -u $$(id -u) jnorwood/helm-docs:latest
+	@docker run --rm --volume "$$(pwd):/helm-docs" -u $$(id -u) jnorwood/helm-docs:latest --document-dependency-values
