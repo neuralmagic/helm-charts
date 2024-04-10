@@ -20,26 +20,29 @@ The following options are supported. See [values.yaml](/charts/nmvllm/values.yam
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` | Provide affinity rules for the pod scheduling. |
+| affinity | object | `{}` | Provide affinity rules for pod scheduling. |
 | fullnameOverride | string | `""` | Provide a name to substitute for the full names of resources. |
-| image.pullPolicy | string | `"IfNotPresent"` | The pull policy for the Docker image. |
-| image.repository | string | `"ghcr.io/neuralmagic/nm-vllm-openai"` | The Docker image repository for the application. |
-| image.tag | string | `"v0.1.0"` | The tag of the Docker image to use. |
-| modelName | string | `"mistralai/Mistral-7B-v0.1"` |  |
+| image | object | -- | Configuration for the application image. |
+| image.pullPolicy | string | `"IfNotPresent"` | The pull policy for the image. |
+| image.repository | string | `"ghcr.io/neuralmagic/nm-vllm-openai"` | The image repository for the application. |
+| image.tag | string | `"v0.1.0"` | The tag of the image to use. |
+| modelName | string | `"mistralai/Mistral-7B-v0.1"` | The name of the model to serve |
 | nameOverride | string | `""` | Provide a name to substitute for the name of the chart. |
-| nodeSelector | object | `{}` |  |
-| podAnnotations | object | `{}` |  |
-| podLabels | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
-| readinessProbe.httpGet.path | string | `"/health"` |  |
-| readinessProbe.httpGet.port | string | `"http"` |  |
-| readinessProbe.initialDelaySeconds | int | `5` |  |
-| readinessProbe.periodSeconds | int | `5` |  |
-| replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
-| securityContext | object | `{}` |  |
-| service.port | int | `80` |  |
-| service.type | string | `"LoadBalancer"` |  |
-| tolerations | list | `[]` |  |
-| volumeMounts | list | `[]` |  |
-| volumes | list | `[]` |  |
+| nodeSelector | object | `{}` | Node labels controlling where the pod will be scheduled. |
+| podAnnotations | object | `{}` | Annotations to add to the pod. |
+| podLabels | object | `{}` | Labels to add to the pod. |
+| podSecurityContext | object | `{}` | Defines the security options the pod should be run with. |
+| readinessProbe | object | -- | Readiness probe configuration for the container. |
+| readinessProbe.httpGet | object | `{"path":"/health","port":"http"}` | Specifies the http request to perform. |
+| readinessProbe.httpGet.path | string | `"/health"` | Path to access on the HTTP server. |
+| readinessProbe.httpGet.port | string | `"http"` | Name or number of the port to access on the container. |
+| readinessProbe.initialDelaySeconds | int | `5` | Number of seconds after the container has started before readiness probes are initiated. |
+| replicaCount | int | `1` | Number of replicas of the pod to run. |
+| resources | object | `{}` | Compute Resources required by the container. |
+| securityContext | object | `{}` | Defines the security options the container should be run with. |
+| service | object | -- | Configuration for the service resource. |
+| service.port | int | `80` | Port to expose on the service. |
+| service.type | string | `"LoadBalancer"` | The kind of service that should be used. |
+| tolerations | list | `[]` | Tolerations applied to the pod allowing the scheduler to schedule the pod to nodes with matching taints. |
+| volumeMounts | list | `[]` | Pod volumes to mount into the container's filesystem. |
+| volumes | list | `[]` | Volumes to make available to the pod. |
