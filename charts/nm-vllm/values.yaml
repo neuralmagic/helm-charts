@@ -1,33 +1,82 @@
-# -- Provide affinity rules for the pod scheduling.
+# -- Provide affinity rules for pod scheduling.
 affinity: {}
+
 # -- Provide a name to substitute for the full names of resources.
 fullnameOverride: ""
+
+# -- Configuration for the application image.
+# @default -- --
 image:
-  # -- The Docker image repository for the application.
+  # -- The image repository for the application.
   repository: ghcr.io/neuralmagic/nm-vllm-openai
-  # -- The pull policy for the Docker image.
+
+  # -- The pull policy for the image.
   pullPolicy: IfNotPresent
-  # -- The tag of the Docker image to use.
+
+  # -- The tag of the image to use.
   tag: v0.1.0
+
+# -- The name of the model to serve
 modelName: mistralai/Mistral-7B-v0.1
+
 # -- Provide a name to substitute for the name of the chart.
 nameOverride: ""
+
+# -- Node labels controlling where the pod will be scheduled.
 nodeSelector: {}
+
+# -- Annotations to add to the pod.
 podAnnotations: {}
+
+# -- Labels to add to the pod.
 podLabels: {}
+
+# -- Defines the security options the pod should be run with.
 podSecurityContext: {}
+
+# -- Readiness probe configuration for the container.
+# @default -- --
 readinessProbe:
+
+  # -- Specifies the http request to perform.
   httpGet:
+    # -- Path to access on the HTTP server.
     path: /health
+    # -- Name or number of the port to access on the container.
     port: http
+
+  # -- Number of seconds after the container has started before readiness
+  # probes are initiated.
   initialDelaySeconds: 5
+
+  # - How often (in seconds) to perform the probe. Minimum value is 1.
   periodSeconds: 5
+
+# -- Number of replicas of the pod to run.
 replicaCount: 1
+
+# -- Compute Resources required by the container.
 resources: {}
+
+# -- Defines the security options the container should be run with.
 securityContext: {}
+
+# -- Configuration for the service resource.
+# @default -- --
 service:
-  type: LoadBalancer
+
+  # -- Port to expose on the service.
   port: 80
+
+  # -- The kind of service that should be used.
+  type: LoadBalancer
+
+# -- Tolerations applied to the pod allowing the scheduler to schedule the pod to
+# nodes with matching taints.
 tolerations: []
+
+# -- Pod volumes to mount into the container's filesystem.
 volumeMounts: []
+
+# -- Volumes to make available to the pod.
 volumes: []
