@@ -9,3 +9,8 @@ quality:
 # style the code according to accepted standards for the repo
 style:
 	pre-commit run --all-files -c .pre-commit-config.yaml
+	
+.PHONY: docs
+docs: ## Build helm chart documentation
+	@docker pull jnorwood/helm-docs:latest
+	@docker run --rm --volume "$$(pwd):/helm-docs" -u $$(id -u) jnorwood/helm-docs:latest
