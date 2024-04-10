@@ -9,7 +9,7 @@ quality:
 # style the code according to accepted standards for the repo
 style:
 	pre-commit run --all-files -c .pre-commit-config.yaml
-	
+
 .PHONY: docs
 docs: ## Build helm chart documentation
 	@docker pull jnorwood/helm-docs:latest
