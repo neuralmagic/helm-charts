@@ -27,7 +27,7 @@ The following options are supported. See [values.yaml](/charts/nm-vllm/values.ya
 | nm-vllm.image.pullPolicy | string | `"IfNotPresent"` | The pull policy for the image. |
 | nm-vllm.image.repository | string | `"ghcr.io/neuralmagic/nm-vllm-openai"` | The image repository for the application. |
 | nm-vllm.image.tag | string | `"v0.1.0"` | The tag of the image to use. |
-| nm-vllm.modelName | string | `"mistralai/Mistral-7B-v0.1"` | The name of the model to serve |
+| nm-vllm.modelName | string | `"mistralai/Mistral-7B-v0.1"` | The name of the model to serve. |
 | nm-vllm.nameOverride | string | `""` | Provide a name to substitute for the name of the chart. |
 | nm-vllm.nodeSelector | object | `{}` | Node labels controlling where the pod will be scheduled. |
 | nm-vllm.podAnnotations | object | `{}` | Annotations to add to the pod. |
