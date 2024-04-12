@@ -60,3 +60,15 @@ jobs:
           source venv/bin/activate
 
           pytest
+
+      - name: Check if docs are updated
+        run: |
+          make docs
+          if [[ -n "$(git status --porcelain --untracked-files=no)" ]]; then
+            echo "Documentation not up to date." >&2
+            echo "Please run 'make docs' from the repository root and commit changes!" >&2
+            git diff
+            exit 1
+          else
+            echo "Documentation is up to date." >&2
+          fi
