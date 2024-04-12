@@ -16,7 +16,7 @@ image:
   # -- The tag of the image to use.
   tag: v0.1.0
 
-# -- The name of the model to serve
+# -- The name of the model to serve.
 modelName: mistralai/Mistral-7B-v0.1
 
 # -- Provide a name to substitute for the name of the chart.
