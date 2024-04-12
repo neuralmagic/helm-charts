@@ -17,7 +17,7 @@ Flake8-pyproject==1.2.3
 flake8-spellcheck==0.28.0
 flake8-typing-imports==1.12.0
 identify==2.5.35
-idna==3.6
+idna==3.7
 iniconfig==2.0.0
 isort==5.8.0
 mccabe==0.7.0
