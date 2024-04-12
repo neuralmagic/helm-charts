@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - 'main'
+      - 'add-gha-readme-generation-checker'
     paths:
       - 'README.md'
 permissions: {}
@@ -17,7 +17,7 @@ jobs:
           cp -f README.md ${{ runner.temp }}/README.md
       - uses: actions/checkout@v2
         with:
-          ref: gh-pages
+          ref: sync-test
       - run: |
           cp -f ${{ runner.temp }}/README.md .
           git config user.name "$GITHUB_ACTOR"
