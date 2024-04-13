@@ -43,6 +43,7 @@ The following options are supported. See [values.yaml](/charts/nmvllm/values.yam
 | service | object | -- | Configuration for the service resource. |
 | service.port | int | `80` | Port to expose on the service. |
 | service.type | string | `"LoadBalancer"` | The kind of service that should be used. |
+| testValue | string | `""` | Test value. |
 | tolerations | list | `[]` | Tolerations applied to the pod allowing the scheduler to schedule the pod to nodes with matching taints. |
 | volumeMounts | list | `[]` | Pod volumes to mount into the container's filesystem. |
 | volumes | list | `[]` | Volumes to make available to the pod. |
