@@ -80,6 +80,3 @@ volumeMounts: []
 
 # -- Volumes to make available to the pod.
 volumes: []
-
-# -- Test value.
-testValue: ""

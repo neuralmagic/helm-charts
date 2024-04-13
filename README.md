@@ -44,7 +44,6 @@ The following options are supported. See [values.yaml](/charts/nm-vllm/values.ya
 | nm-vllm.service | object | -- | Configuration for the service resource. |
 | nm-vllm.service.port | int | `80` | Port to expose on the service. |
 | nm-vllm.service.type | string | `"LoadBalancer"` | The kind of service that should be used. |
-| nm-vllm.testValue | string | `""` | Test value. |
 | nm-vllm.tolerations | list | `[]` | Tolerations applied to the pod allowing the scheduler to schedule the pod to nodes with matching taints. |
 | nm-vllm.volumeMounts | list | `[]` | Pod volumes to mount into the container's filesystem. |
 | nm-vllm.volumes | list | `[]` | Volumes to make available to the pod. |
