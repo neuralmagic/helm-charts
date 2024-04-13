@@ -21,6 +21,8 @@ The following options are supported. See [values.yaml](/charts/nmvllm/values.yam
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Provide affinity rules for pod scheduling. |
+| apiServer | object | -- | Configuration for the nm-vllm API server |
+| apiServer.extraArgs | list | `[]` | Extra arguments to pass to the API server command |
 | fullnameOverride | string | `""` | Provide a name to substitute for the full names of resources. |
 | image | object | -- | Configuration for the application image. |
 | image.pullPolicy | string | `"IfNotPresent"` | The pull policy for the image. |

@@ -1,6 +1,12 @@
 # -- Provide affinity rules for pod scheduling.
 affinity: {}
 
+# -- Configuration for the nm-vllm API server
+# @default -- --
+apiServer:
+  # -- Extra arguments to pass to the API server command
+  extraArgs: []
+
 # -- Provide a name to substitute for the full names of resources.
 fullnameOverride: ""
 

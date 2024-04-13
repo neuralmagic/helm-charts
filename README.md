@@ -22,6 +22,8 @@ The following options are supported. See [values.yaml](/charts/nm-vllm/values.ya
 |-----|------|---------|-------------|
 | nm-vllm | object | -- | Configuration for the nm-vllm server deployment and service. |
 | nm-vllm.affinity | object | `{}` | Provide affinity rules for pod scheduling. |
+| nm-vllm.apiServer | object | -- | Configuration for the nm-vllm API server |
+| nm-vllm.apiServer.extraArgs | list | `[]` | Extra arguments to pass to the API server command |
 | nm-vllm.fullnameOverride | string | `""` | Provide a name to substitute for the full names of resources. |
 | nm-vllm.image | object | -- | Configuration for the application image. |
 | nm-vllm.image.pullPolicy | string | `"IfNotPresent"` | The pull policy for the image. |
