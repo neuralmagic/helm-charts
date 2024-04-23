@@ -3,6 +3,16 @@ entries:
   nm-vllm:
   - apiVersion: v2
     appVersion: v0.1.0
+    created: "2024-04-23T17:35:15.996134757Z"
+    description: A Helm chart for nm-vllm server deployment
+    digest: 6f1d6c69da8bcb1aed4d0ff38a5660967b1c8850b2456ad853a1b59cdd6e5203
+    name: nm-vllm
+    type: application
+    urls:
+    - https://github.com/neuralmagic/helm-charts/releases/download/nm-vllm-0.1.1/nm-vllm-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v0.1.0
     created: "2024-04-05T20:20:23.5378937Z"
     description: A Helm chart for nm-vllm server deployment
     digest: 51de3d06a7b185fb32ae88761e407f2a254aca31339b409b168c9b55421dea1c
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://github.com/neuralmagic/helm-charts/releases/download/nm-vllm-0.1.0/nm-vllm-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-05T20:20:23.537898018Z"
+generated: "2024-04-23T17:35:15.996148062Z"
