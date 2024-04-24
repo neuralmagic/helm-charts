@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2019-09/schema",
-  "description": "Default values for atlantis. Declare variables to be passed into your templates.",
+  "description": "Default values for nm-vllm. Declare variables to be passed into your templates.",
   "type": "object",
   "properties": {
     "affinity": {
@@ -126,7 +126,7 @@
         },
         "type": {
           "type": "string",
-          "description": "Configuration for the service resource.",
+          "description": "The kind of service that should be used to make the pod available on the network so that clients can interact with it.",
           "default": "LoadBalancer",
           "examples": [
             "ClusterIP", "LoadBalancer", "NodePort"
