@@ -43,6 +43,7 @@ The following options are supported. See [values.yaml](/charts/nm-vllm/values.ya
 | resources | object | `{}` | Compute Resources required by the container. |
 | securityContext | object | `{}` | Defines the security options the container should be run with. |
 | service | object | -- | Configuration for the service resource. |
+| service.annotations | object | `{}` | Annotations to add to the service. |
 | service.port | int | `80` | Port to expose on the service. |
 | service.type | string | `"LoadBalancer"` | The kind of service that should be used. |
 | tolerations | list | `[]` | Tolerations applied to the pod allowing the scheduler to schedule the pod to nodes with matching taints. |

@@ -70,6 +70,8 @@ securityContext: {}
 # -- Configuration for the service resource.
 # @default -- --
 service:
+  # -- Annotations to add to the service.
+  annotations: {}
 
   # -- Port to expose on the service.
   port: 80
