@@ -8,10 +8,10 @@ Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
 Once Helm is set up properly, add the repository as follows:
 
 ```console
-helm repo add nm-vllm https://neuralmagic.github.io/helm-charts
+helm repo add neuralmagic https://helm.neuralmagic.com
 ```
 
-You can then run `helm search repo nm-vllm` to see the charts.
+You can then run `helm search repo neuralmagic` to see the charts.
 
 ## Customization
 The following options are supported. See [values.yaml](/charts/nm-vllm/values.yaml) for more detailed documentation and examples:
