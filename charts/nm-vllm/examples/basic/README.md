@@ -39,8 +39,8 @@ helm install nm-vllm charts/nm-vllm -f charts/nm-vllm/examples/basic/values.yaml
 
 ## Values
 
-The `values.yaml` is included in full below, but the `values.yaml` file is also
-available [here](./values.yaml).
+The content of `values.yaml` is included in full below, but the `values.yaml`
+file is also available [here](./values.yaml).
 
 ```yaml
 apiServer:
