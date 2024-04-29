@@ -14,6 +14,29 @@ such that the pod is limited to:
 - `16Gi memory`
 - `1 nvidia.com/gpu`
 
+## Usage
+
+### Using Neural Magic Helm Repository
+
+```bash
+# Add Neural Magic Helm repository
+helm repo add neuralmagic https://helm.neuralmagic.com
+
+# Install nm-vllm chart using basic example values
+helm install nm-vllm nm-vllm -f https://raw.githubusercontent.com/neuralmagic/helm-charts/main/charts/nm-vllm/examples/basic/values.yaml
+```
+
+### Using `helm-charts` git repository
+
+```bash
+# Clone Neural Magic helm-charts git repository
+git clone https://github.com/neuralmagic/helm-charts.git
+
+# Install nm-vllm chart using basic example values
+cd helm-charts
+helm install nm-vllm charts/nm-vllm -f charts/nm-vllm/examples/basic/values.yaml
+```
+
 ## Values
 
 The `values.yaml` is included in full below, but the `values.yaml` file is also
@@ -33,21 +56,4 @@ resources:
     cpu: 4
     memory: 16Gi
     nvidia.com/gpu: 1
-```
-
-## Example invocations
-
-### Using Neural Magic Helm Repository
-
-```bash
-helm repo add neuralmagic https://helm.neuralmagic.com
-helm install nm-vllm nm-vllm -f https://raw.githubusercontent.com/neuralmagic/helm-charts/main/charts/nm-vllm/examples/basic/values.yaml
-```
-
-### Using `helm-charts` git repository
-
-```bash
-git clone https://github.com/neuralmagic/helm-charts.git
-cd helm-charts
-helm install nm-vllm charts/nm-vllm -f charts/nm-vllm/examples/basic/values.yaml
 ```
