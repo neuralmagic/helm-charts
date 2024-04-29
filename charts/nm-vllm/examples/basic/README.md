@@ -1,0 +1,36 @@
+# Basic
+
+This example demonstrates the values required to use the `nm-vllm` chart to
+deploy the `TheBloke/Mistral-7B-Instruct-v0.2-GPTQ` model.
+
+Because the target model is quantized using GPTQ, the values also specify extra
+arguments for the vLLM OpenAI API server to inform the server to use `float16`
+for the data type of the model weights and activations.
+
+Finally, the values configure the resource limits for the API server deployment
+such that the pod is limited to:
+
+- `4 cpus`
+- `16Gi memory`
+- `1 nvidia.com/gpu`
+
+## Values
+
+The `values.yaml` is included in full below, but the `values.yaml` file is also
+available [here](./values.yaml).
+
+```yaml
+apiServer:
+  extraArgs:
+    - --dtype
+    - float16
+
+modelName:
+  TheBloke/Mistral-7B-Instruct-v0.2-GPTQ
+
+resources:
+  limits:
+    cpu: 4
+    memory: 16Gi
+    nvidia.com/gpu: 1
+```

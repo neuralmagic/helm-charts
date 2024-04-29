@@ -1,0 +1,13 @@
+apiServer:
+  extraArgs:
+    - --dtype
+    - float16
+
+modelName:
+  TheBloke/Mistral-7B-Instruct-v0.2-GPTQ
+
+resources:
+  limits:
+    cpu: 4
+    memory: 16Gi
+    nvidia.com/gpu: 1
