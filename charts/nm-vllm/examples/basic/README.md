@@ -1,7 +1,8 @@
 # Basic
 
 This example demonstrates the values required to use the `nm-vllm` chart to
-deploy the `TheBloke/Mistral-7B-Instruct-v0.2-GPTQ` model.
+deploy the `TheBloke/Mistral-7B-Instruct-v0.2-GPTQ` model to a node with an
+NVIDIA A100 SXM4 40GB GPU.
 
 Because the target model is quantized using GPTQ, the values also specify extra
 arguments for the vLLM OpenAI API server to inform the server to use `float16`
@@ -48,8 +49,10 @@ apiServer:
     - --dtype
     - float16
 
-modelName:
-  TheBloke/Mistral-7B-Instruct-v0.2-GPTQ
+modelName: TheBloke/Mistral-7B-Instruct-v0.2-GPTQ
+
+nodeSelector:
+  nvidia.com/gpu.product: NVIDIA-A100-SXM4-40GB
 
 resources:
   limits:
