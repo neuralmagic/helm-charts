@@ -17,7 +17,7 @@ grafana:
 
       ## URL of prometheus datasource
       ##
-      # url: http://prometheus-stack-prometheus:9090/
+      url: http://:9090/
 
       label: grafana_datasource
       labelValue: "1"
