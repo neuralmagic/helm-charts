@@ -11,7 +11,6 @@ data:
     {{- $scrapeInterval := .Values.grafana.sidecar.datasources.defaultDatasourceScrapeInterval | default "5s" }}
     - name: Prometheus
       type: prometheus
-      uid: {{ .Values.grafana.sidecar.datasources.uid }}
       url: {{ .Values.grafana.sidecar.datasources.url }}
       jsonData:
         httpMethod: {{ .Values.grafana.sidecar.datasources.httpMethod }}

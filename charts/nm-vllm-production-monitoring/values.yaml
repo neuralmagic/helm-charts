@@ -14,7 +14,6 @@ grafana:
       annotations: {}
     datasources:
       enabled: true
-      uid: prometheus
 
       ## URL of prometheus datasource
       ##
