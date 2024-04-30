@@ -12,12 +12,3 @@ helm repo add neuralmagic https://helm.neuralmagic.com
 ```
 
 You can then run `helm search repo neuralmagic` to see the charts.
-
-## Customization
-The following options are supported. See [values.yaml](/charts/nm-vllm/values.yaml) for more detailed documentation and examples:
-
-## Values
-
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| nm-vllm | object | -- | Configuration for the nm-vllm server deployment and service. |

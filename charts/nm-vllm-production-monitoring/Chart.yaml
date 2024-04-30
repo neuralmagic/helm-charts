@@ -1,6 +1,9 @@
 apiVersion: v2
 appVersion: "v0.1.0"
 dependencies:
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 7.3.9
 - name: nm-vllm
   repository: https://helm.neuralmagic.com
   version: 0.1.1
