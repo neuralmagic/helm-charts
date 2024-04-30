@@ -3,3 +3,22 @@
 nm-vllm:
   podAnnotations:
     prometheus.io/scrape: "true"
+
+grafana:
+  enabled: true
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      labelValue: "1"
+      annotations: {}
+    datasources:
+      enabled: true
+      uid: prometheus
+
+      ## URL of prometheus datasource
+      ##
+      # url: http://prometheus-stack-prometheus:9090/
+
+      label: grafana_datasource
+      labelValue: "1"
