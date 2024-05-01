@@ -1,0 +1,15 @@
+apiServer:
+  extraArgs:
+    - --dtype
+    - float16
+
+modelName: TheBloke/Mistral-7B-Instruct-v0.2-GPTQ
+
+nodeSelector:
+  nvidia.com/gpu.product: NVIDIA-A100-SXM4-40GB
+
+resources:
+  limits:
+    cpu: 4
+    memory: 16Gi
+    nvidia.com/gpu: 1
