@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: "v0.1.0"
+description: A Helm chart for use with grafana sidecar dashboards for vllm monitoring
+name: nm-vllm-grafana-dashboards
+type: application
+version: 0.0.1

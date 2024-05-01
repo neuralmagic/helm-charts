@@ -1,0 +1,5 @@
+grafana:
+  sidecar:
+    dashboards:
+      label: grafana_dashboard
+      labelValue: "1"

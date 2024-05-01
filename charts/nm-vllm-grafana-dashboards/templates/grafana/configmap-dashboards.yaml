@@ -7,7 +7,7 @@ items:
 - apiVersion: v1
   kind: ConfigMap
   metadata:
-    name: grafana-dashboard
+    name: {{ template "nm-vllm-grafana-dashboards.fullname" . }}-grafana-dashboard
     labels:
       {{- if $.Values.grafana.sidecar.dashboards.label }}
       {{ $.Values.grafana.sidecar.dashboards.label }}: {{ ternary $.Values.grafana.sidecar.dashboards.labelValue "1" (not (empty $.Values.grafana.sidecar.dashboards.labelValue)) | quote }}
