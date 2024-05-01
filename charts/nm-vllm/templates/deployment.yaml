@@ -31,31 +31,39 @@ spec:
               "python3",
               "-m",
               "vllm.entrypoints.openai.api_server",
+              "--host",
+              "{{ .Values.apiServer.host }}",
               "--model",
               "{{ .Values.modelName }}",
-              "--host",
-              "0.0.0.0",
               "--port",
-              "{{ .Values.service.port }}",
+              "{{ .Values.apiServer.port }}",
               {{- range .Values.apiServer.extraArgs }}
               {{ quote . }},
               {{- end }}
             ]
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.livenessProbe }}
           livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           name: {{ .Chart.Name }}
           ports:
-            - containerPort: {{ .Values.service.port }}
+            - containerPort: {{ .Values.apiServer.port }}
               name: http
               protocol: TCP
+          {{- with .Values.readinessProbe }}
           readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.securityContext }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}
@@ -64,8 +72,10 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- with .Values.podSecurityContext }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
