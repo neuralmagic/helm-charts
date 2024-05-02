@@ -14,6 +14,7 @@ helm repo add neuralmagic https://helm.neuralmagic.com
 You can then run `helm search repo neuralmagic` to see the charts.
 
 ## Customization
+
 The following options are supported. See [values.yaml](/charts/nm-vllm/values.yaml) for more detailed documentation and examples:
 
 ## Values
@@ -49,3 +50,9 @@ The following options are supported. See [values.yaml](/charts/nm-vllm/values.ya
 | tolerations | list | `[]` | Tolerations applied to the pod allowing the scheduler to schedule the pod to nodes with matching taints. |
 | volumeMounts | list | `[]` | Pod volumes to mount into the container's filesystem. |
 | volumes | list | `[]` | Volumes to make available to the pod. |
+
+## Examples
+
+- [Basic](./examples/basic)
+  - Demonstrates configuring `apiServer.extraArgs`, `modelName`,
+  `nodeSelector`, and `resources`.
