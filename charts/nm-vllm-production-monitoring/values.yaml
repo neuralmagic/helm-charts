@@ -3,6 +3,8 @@
 nm-vllm:
   podAnnotations:
     prometheus.io/scrape: "true"
+# -- Grafana sidecar values
+# @default -- --
 grafana:
   enabled: true
   sidecar:
@@ -12,10 +14,14 @@ grafana:
       labelValue: "1"
     datasources:
       enabled: true
-      httpMethod: POST
-      uid: prometheus
-      ## URL of prometheus datasource
-      ##
-      url: http://nm-vllm-prometheus-server/
       label: grafana_datasource
       labelValue: "1"
+      
+# -- Grafana datasource http method
+datasourceHttpMethod: POST
+
+# -- Grafana datasource uid
+datasourceUid: prometheus
+
+# -- Grafana datasource url
+datasourceUrl: http://nm-vllm-prometheus-server/

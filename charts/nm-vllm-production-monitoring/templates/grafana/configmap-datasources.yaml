@@ -8,15 +8,15 @@ data:
   datasource.yaml: |-
     apiVersion: 1
     datasources:
-{{- $scrapeInterval := .Values.grafana.sidecar.datasources.scrapeInterval | default "15s" }}
+{{- $scrapeInterval := .Values.scrapeInterval | default "15s" }}
     - name: Prometheus
       type: prometheus
-      uid: {{ .Values.grafana.sidecar.datasources.uid }}
-      url: {{ .Values.grafana.sidecar.datasources.url }}
+      uid: {{ .Values.datasourceUid }}
+      url: {{ .Values.datasourceUrl }}
       isDefault: true
       access: proxy
       jsonData:
-        httpMethod: {{ .Values.grafana.sidecar.datasources.httpMethod }}
+        httpMethod: {{ .Values.datasourceHttpMethod }}
         timeInterval: {{ $scrapeInterval }}
 
 # https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/templates/grafana/configmaps-datasources.yaml
