@@ -27,7 +27,7 @@ grafana:
 
       # -- Grafana sidecar datasource label
       labelValue: "1"
-      
+
 # -- Grafana datasource http method
 datasourceHttpMethod: POST
 
