@@ -1,3 +1,5 @@
 joinpath
+liveness
 loadbalancer
 normpath
+tolerations
