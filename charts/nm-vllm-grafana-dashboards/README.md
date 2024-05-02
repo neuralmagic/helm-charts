@@ -75,5 +75,7 @@ documentation and examples.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| fullnameOverride | string | `""` | Provide a name to substitute for the full names of resources. |
 | label | string | `"grafana_dashboard"` | Label used by Grafana's dashboards sidecar to identify config maps with dashboards that should be added to Grafana. Should match the value of the `sidecar.dashboards.label` configuration in the Grafana chart. |
 | labelValue | string | `""` | Label value used by Grafana's dashboards sidecar to identify config maps with dashboards that should be added to Grafana. Should match the value of the `sidecar.dashboards.labelValue` configuration in the Grafana chart. |
+| nameOverride | string | `""` | Provide a name to substitute for the name of the chart. |
