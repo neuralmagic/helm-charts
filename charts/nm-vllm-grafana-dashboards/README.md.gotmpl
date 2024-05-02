@@ -16,7 +16,8 @@ directory can be utilized in two ways:
    instance.
 2. Use this chart to deploy the dashboard to Kubernetes as ConfigMap resources
    that can be detected by the Grafana dashboard sidecar that is part of the
-   official Grafana Helm Chart.
+   official [Grafana Helm
+   chart](https://github.com/grafana/helm-charts/tree/main/charts/grafana).
 
 The directions that follow cover how to deploy this Helm chart for use with a
 Grafana instance managed by Helm.
