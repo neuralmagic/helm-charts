@@ -4,11 +4,15 @@ from pytest_helm_templates import HelmRunner
 
 
 def test_expected_dashboard_config_maps_are_included(
+    app_version: str,
+    chart_name: str,
+    chart_version: str,
     default_values: Dict,
     helm_runner: HelmRunner,
     raw_dashboards: Dict[str, str],
 ) -> None:
-    subject = render_subject(helm_runner=helm_runner)
+    name = "name-given-to-the-chart"
+    subject = render_subject(helm_runner=helm_runner, name=name)
 
     assert subject["apiVersion"] == "v1"
     assert subject["kind"] == "ConfigMapList"
@@ -23,6 +27,15 @@ def test_expected_dashboard_config_maps_are_included(
 
         metadata = dashboard["metadata"]
         assert metadata
+
+        labels = metadata["labels"]
+        assert labels
+        assert labels["app.kubernetes.io/instance"] == name
+        assert labels["app.kubernetes.io/managed-by"] == "Helm"
+        assert labels["app.kubernetes.io/name"] == chart_name
+        assert labels["app.kubernetes.io/version"] == app_version
+        assert labels["helm.sh/chart"] == f"{chart_name}-{chart_version}"
+        assert labels[default_values["label"]] == default_values["labelValue"]
 
         data = dashboard["data"]
         for dashboard_file_name, dashboard_raw in data.items():

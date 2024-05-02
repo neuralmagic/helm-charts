@@ -9,9 +9,8 @@ items:
   metadata:
     name: {{ template "nm-vllm-grafana-dashboards.fullname" $ }}-grafana-dashboard
     labels:
-      {{- if $.Values.label }}
-      {{ $.Values.label }}: {{ ternary $.Values.labelValue "1" (not (empty $.Values.labelValue)) | quote }}
-      {{- end }}
+      {{- include "nm-vllm-grafana-dashboards.labels" $ | nindent 6 }}
+      {{ $.Values.label }}: {{ $.Values.labelValue | quote }}
   data:
     {{ $dashboardName }}.json: {{ $.Files.Get $path | toJson }}
 {{- end }}
