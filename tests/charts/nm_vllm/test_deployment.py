@@ -230,6 +230,21 @@ def test_pod_annotations_can_be_configured(helm_runner: HelmRunner) -> None:
     assert pod_annotations == actual_annotations
 
 
+def test_pod_labels_can_be_configured(helm_runner: HelmRunner) -> None:
+    pod_labels = {
+        "baz": "bat",
+        "foo": "bar",
+        "meow/meow": "cat",
+    }
+    subject = render_subject(
+        helm_runner=helm_runner,
+        values={"podLabels": pod_labels},
+    )
+    actual_labels = subject["spec"]["template"]["metadata"]["labels"]
+    for label_key, label_value in pod_labels.items():
+        assert actual_labels[label_key] == label_value
+
+
 def test_affinity_is_omitted_when_not_given(helm_runner: HelmRunner) -> None:
     subject = render_subject(
         helm_runner=helm_runner,
