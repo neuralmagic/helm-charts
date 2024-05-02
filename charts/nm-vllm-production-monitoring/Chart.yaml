@@ -1,20 +1,11 @@
 apiVersion: v2
 appVersion: "v0.1.0"
 dependencies:
-- name: grafana
-  repository: https://grafana.github.io/helm-charts
-  version: 7.3.9
 - name: nm-vllm
   repository: https://helm.neuralmagic.com
   version: 0.1.1
-- name: nm-vllm-grafana-dashboards
-  version: "*.*.*"
-- name: prometheus
-  repository: https://prometheus-community.github.io/helm-charts
-  version: 25.12.0
 description: |
-  A Helm chart for nm-vllm server deployment with production monitoring
-  additions including prometheus and grafana.
+  A Helm chart for nm-vllm server deployment with production monitoring additions.
 name: nm-vllm-production-monitoring
 type: application
 version: 0.0.1

@@ -1,27 +1,3 @@
 # -- (object) Configuration for the nm-vllm server deployment and service.
 # @default -- --
-nm-vllm:
-  podAnnotations:
-    prometheus.io/scrape: "true"
-# -- Grafana sidecar values
-# @default -- --
-grafana:
-  enabled: true
-  sidecar:
-    dashboards:
-      enabled: true
-      label: grafana_dashboard
-      labelValue: "1"
-    datasources:
-      enabled: true
-      label: grafana_datasource
-      labelValue: "1"
-      
-# -- Grafana datasource http method
-datasourceHttpMethod: POST
-
-# -- Grafana datasource uid
-datasourceUid: prometheus
-
-# -- Grafana datasource url
-datasourceUrl: http://nm-vllm-prometheus-server/
+nm-vllm: {}
