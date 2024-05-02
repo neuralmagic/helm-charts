@@ -24,11 +24,14 @@ The following options are supported. See [values.yaml](/charts/nm-vllm/values.ya
 | affinity | object | `{}` | Provide affinity rules for pod scheduling. |
 | apiServer | object | -- | Configuration for the nm-vllm API server |
 | apiServer.extraArgs | list | `[]` | Extra arguments to pass to the API server command |
+| apiServer.host | string | `"0.0.0.0"` | The host that the API server should bind to |
+| apiServer.port | int | `80` | The port that the API server should bind to |
 | fullnameOverride | string | `""` | Provide a name to substitute for the full names of resources. |
 | image | object | -- | Configuration for the application image. |
 | image.pullPolicy | string | `"IfNotPresent"` | The pull policy for the image. |
 | image.repository | string | `"ghcr.io/neuralmagic/nm-vllm-openai"` | The image repository for the application. |
 | image.tag | string | `"v0.1.0"` | The tag of the image to use. |
+| livenessProbe | object | -- | Liveness probe configuration for the container. |
 | modelName | string | `"mistralai/Mistral-7B-v0.1"` | The name of the model to serve. |
 | nameOverride | string | `""` | Provide a name to substitute for the name of the chart. |
 | nodeSelector | object | `{}` | Node labels controlling where the pod will be scheduled. |
