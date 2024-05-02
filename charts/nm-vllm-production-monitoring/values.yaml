@@ -2,19 +2,30 @@
 # @default -- --
 nm-vllm:
   podAnnotations:
+      # -- Enables prometheus to find pod to scrape
     prometheus.io/scrape: "true"
 # -- Grafana sidecar values
 # @default -- --
 grafana:
-  enabled: true
   sidecar:
     dashboards:
+      # -- True is required to enable sidecar dashboards
       enabled: true
+
+      # -- Grafana sidecar dashboard label
       label: grafana_dashboard
+
+      # -- Grafana sidecar dashboard label value
       labelValue: "1"
+
     datasources:
+      # -- True is required to enable sidecar datasources
       enabled: true
+
+      # -- Grafana sidecar datasource label
       label: grafana_datasource
+
+      # -- Grafana sidecar datasource label
       labelValue: "1"
       
 # -- Grafana datasource http method
