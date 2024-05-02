@@ -35,3 +35,5 @@ requirements.txt
 tests/
 venv/
 whitelist.txt
+charts/*/charts
+chart.lock
