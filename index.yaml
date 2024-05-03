@@ -3,6 +3,16 @@ entries:
   nm-vllm:
   - apiVersion: v2
     appVersion: v0.1.0
+    created: "2024-05-03T20:54:11.653210111Z"
+    description: A Helm chart for nm-vllm server deployment
+    digest: 471b9dbdfd6588115174c2bb64ce6c11cff027a482c40f11a807135ef02ba6f5
+    name: nm-vllm
+    type: application
+    urls:
+    - https://github.com/neuralmagic/helm-charts/releases/download/nm-vllm-0.1.2/nm-vllm-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: v0.1.0
     created: "2024-04-23T17:35:15.996134757Z"
     description: A Helm chart for nm-vllm server deployment
     digest: 6f1d6c69da8bcb1aed4d0ff38a5660967b1c8850b2456ad853a1b59cdd6e5203
@@ -21,4 +31,32 @@ entries:
     urls:
     - https://github.com/neuralmagic/helm-charts/releases/download/nm-vllm-0.1.0/nm-vllm-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-23T17:35:15.996148062Z"
+  nm-vllm-grafana-dashboards:
+  - apiVersion: v2
+    appVersion: v0.0.1
+    created: "2024-05-03T20:54:11.761799723Z"
+    description: A Helm chart for making NM vLLM production monitoring dashboards
+      available for Grafana dashboard sidecar deployments to find.
+    digest: 5b53d5b5773d25da9353eb95038ab6074add607c94940a8cd99333caaf45ad5c
+    name: nm-vllm-grafana-dashboards
+    type: application
+    urls:
+    - https://github.com/neuralmagic/helm-charts/releases/download/nm-vllm-grafana-dashboards-0.0.1/nm-vllm-grafana-dashboards-0.0.1.tgz
+    version: 0.0.1
+  nm-vllm-production-monitoring:
+  - apiVersion: v2
+    appVersion: v0.1.0
+    created: "2024-05-03T20:54:11.910554847Z"
+    dependencies:
+    - name: nm-vllm
+      repository: https://helm.neuralmagic.com
+      version: 0.1.1
+    description: 'A Helm chart for nm-vllm server deployment with production monitoring
+      additions. '
+    digest: 6da2c1ed5300cd503fd8d38171c973ba531f79826fdd5e3f4b076544bdac5a07
+    name: nm-vllm-production-monitoring
+    type: application
+    urls:
+    - https://github.com/neuralmagic/helm-charts/releases/download/nm-vllm-production-monitoring-0.0.1/nm-vllm-production-monitoring-0.0.1.tgz
+    version: 0.0.1
+generated: "2024-05-03T20:54:11.91057279Z"
