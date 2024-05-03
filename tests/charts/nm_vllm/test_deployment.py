@@ -7,11 +7,11 @@ from pytest_helm_templates import HelmRunner
 def test_constant_and_default_values(
     app_version: str,
     chart_name: str,
+    chart_values: Dict,
     chart_version: str,
-    default_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
-    name = "name-given-to-the-chart"
+    name = "name-given-to-the-release"
     subject = render_subject(
         helm_runner=helm_runner,
         name=name,
@@ -35,7 +35,7 @@ def test_constant_and_default_values(
     deployment_spec = subject["spec"]
     assert deployment_spec
 
-    assert deployment_spec["replicas"] == default_values["replicaCount"]
+    assert deployment_spec["replicas"] == chart_values["replicaCount"]
 
     match_labels = deployment_spec["selector"]["matchLabels"]
     assert match_labels["app.kubernetes.io/instance"] == name
@@ -68,19 +68,19 @@ def test_constant_and_default_values(
 
     container = containers[0]
     expected_command = get_expected_command(
-        host=default_values["apiServer"]["host"],
-        model_name=default_values["modelName"],
-        port=default_values["apiServer"]["port"],
+        host=chart_values["apiServer"]["host"],
+        model_name=chart_values["modelName"],
+        port=chart_values["apiServer"]["port"],
     )
     assert container["command"] == expected_command
 
     expected_image = get_expected_image(
-        repository=default_values["image"]["repository"],
-        tag=default_values["image"]["tag"],
+        repository=chart_values["image"]["repository"],
+        tag=chart_values["image"]["tag"],
     )
     assert container["image"] == expected_image
 
-    assert container["imagePullPolicy"] == default_values["image"]["pullPolicy"]
+    assert container["imagePullPolicy"] == chart_values["image"]["pullPolicy"]
 
     assert "livenessProbe" not in container
 
@@ -92,7 +92,7 @@ def test_constant_and_default_values(
 
     port = ports[0]
     assert port
-    assert port["containerPort"] == default_values["apiServer"]["port"]
+    assert port["containerPort"] == chart_values["apiServer"]["port"]
     assert port["name"] == "http"
     assert port["protocol"] == "TCP"
 
@@ -100,7 +100,7 @@ def test_constant_and_default_values(
     assert readiness_probe
 
     http_get = readiness_probe["httpGet"]
-    default_readiness_probe = default_values["readinessProbe"]
+    default_readiness_probe = chart_values["readinessProbe"]
     default_http_get = default_readiness_probe["httpGet"]
     assert http_get
     assert http_get["path"] == default_http_get["path"]
@@ -144,7 +144,7 @@ def test_full_name_override_overrides_name(
     full_name_override: str,
     helm_runner: HelmRunner,
 ) -> None:
-    name = "name-given-to-the-chart"
+    name = "name-given-to-the-release"
     subject = render_subject(
         helm_runner=helm_runner,
         name=name,
@@ -230,6 +230,21 @@ def test_pod_annotations_can_be_configured(helm_runner: HelmRunner) -> None:
     assert pod_annotations == actual_annotations
 
 
+def test_pod_labels_can_be_configured(helm_runner: HelmRunner) -> None:
+    pod_labels = {
+        "baz": "bat",
+        "foo": "bar",
+        "meow/meow": "cat",
+    }
+    subject = render_subject(
+        helm_runner=helm_runner,
+        values={"podLabels": pod_labels},
+    )
+    actual_labels = subject["spec"]["template"]["metadata"]["labels"]
+    for label_key, label_value in pod_labels.items():
+        assert actual_labels[label_key] == label_value
+
+
 def test_affinity_is_omitted_when_not_given(helm_runner: HelmRunner) -> None:
     subject = render_subject(
         helm_runner=helm_runner,
@@ -265,7 +280,7 @@ def test_affinity_can_be_configured(helm_runner: HelmRunner) -> None:
 
 
 def test_model_name_can_be_configured(
-    default_values: Dict,
+    chart_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     model_name = "foo/bar"
@@ -274,16 +289,16 @@ def test_model_name_can_be_configured(
         values={"modelName": model_name},
     )
     expected_command = get_expected_command(
-        host=default_values["apiServer"]["host"],
+        host=chart_values["apiServer"]["host"],
         model_name=model_name,
-        port=default_values["apiServer"]["port"],
+        port=chart_values["apiServer"]["port"],
     )
     actual_command = get_container(subject)["command"]
     assert actual_command == expected_command
 
 
 def test_api_server_host_can_be_configured(
-    default_values: Dict,
+    chart_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     host = "127.0.0.1"
@@ -293,15 +308,15 @@ def test_api_server_host_can_be_configured(
     )
     expected_command = get_expected_command(
         host=host,
-        model_name=default_values["modelName"],
-        port=default_values["apiServer"]["port"],
+        model_name=chart_values["modelName"],
+        port=chart_values["apiServer"]["port"],
     )
     actual_command = get_container(subject)["command"]
     assert actual_command == expected_command
 
 
 def test_api_server_port_can_be_configured(
-    default_values: Dict,
+    chart_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     port = 9753
@@ -310,8 +325,8 @@ def test_api_server_port_can_be_configured(
         values={"apiServer": {"port": port}},
     )
     expected_command = get_expected_command(
-        host=default_values["apiServer"]["host"],
-        model_name=default_values["modelName"],
+        host=chart_values["apiServer"]["host"],
+        model_name=chart_values["modelName"],
         port=port,
     )
     container = get_container(subject)
@@ -321,7 +336,7 @@ def test_api_server_port_can_be_configured(
 
 
 def test_api_server_extra_args_can_be_provided(
-    default_values: Dict,
+    chart_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     extra_args = [
@@ -344,16 +359,16 @@ def test_api_server_extra_args_can_be_provided(
     )
     expected_command = get_expected_command(
         extra_args=extra_args,
-        host=default_values["apiServer"]["host"],
-        model_name=default_values["modelName"],
-        port=default_values["apiServer"]["port"],
+        host=chart_values["apiServer"]["host"],
+        model_name=chart_values["modelName"],
+        port=chart_values["apiServer"]["port"],
     )
     actual_command = get_container(subject)["command"]
     assert actual_command == expected_command
 
 
 def test_container_image_repository_can_be_configured(
-    default_values: Dict,
+    chart_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     repository = "some.repo"
@@ -363,13 +378,13 @@ def test_container_image_repository_can_be_configured(
     )
     expected_image = get_expected_image(
         repository=repository,
-        tag=default_values["image"]["tag"],
+        tag=chart_values["image"]["tag"],
     )
     assert get_container(subject)["image"] == expected_image
 
 
 def test_container_image_tag_can_be_configured(
-    default_values: Dict,
+    chart_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     tag = "v1000"
@@ -378,7 +393,7 @@ def test_container_image_tag_can_be_configured(
         values={"image": {"tag": tag}},
     )
     expected_image = get_expected_image(
-        repository=default_values["image"]["repository"],
+        repository=chart_values["image"]["repository"],
         tag=tag,
     )
     assert get_container(subject)["image"] == expected_image
@@ -386,7 +401,7 @@ def test_container_image_tag_can_be_configured(
 
 def test_container_image_tag_defaults_to_app_version_when_omitted(
     app_version: str,
-    default_values: Dict,
+    chart_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     subject = render_subject(
@@ -394,16 +409,13 @@ def test_container_image_tag_defaults_to_app_version_when_omitted(
         values={"image": {"tag": None}},
     )
     expected_image = get_expected_image(
-        repository=default_values["image"]["repository"],
+        repository=chart_values["image"]["repository"],
         tag=app_version,
     )
     assert get_container(subject)["image"] == expected_image
 
 
-def test_container_image_pull_policy_can_be_configured(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_container_image_pull_policy_can_be_configured(helm_runner: HelmRunner) -> None:
     pull_policy = "Never"
     subject = render_subject(
         helm_runner=helm_runner,
@@ -413,7 +425,6 @@ def test_container_image_pull_policy_can_be_configured(
 
 
 def test_container_liveness_probe_is_omitted_when_not_given(
-    default_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     subject = render_subject(
@@ -423,10 +434,7 @@ def test_container_liveness_probe_is_omitted_when_not_given(
     assert "livenessProbe" not in get_container(subject)
 
 
-def test_container_liveness_probe_can_be_configured(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_container_liveness_probe_can_be_configured(helm_runner: HelmRunner) -> None:
     liveness_probe = {
         "httpGet": {
             "path": "/",
@@ -443,7 +451,6 @@ def test_container_liveness_probe_can_be_configured(
 
 
 def test_container_readiness_probe_is_omitted_when_not_given(
-    default_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     subject = render_subject(
@@ -453,10 +460,7 @@ def test_container_readiness_probe_is_omitted_when_not_given(
     assert "readinessProbe" not in get_container(subject)
 
 
-def test_container_readiness_probe_can_be_configured(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_container_readiness_probe_can_be_configured(helm_runner: HelmRunner) -> None:
     readiness_probe = {
         "httpGet": {
             "path": "/readyz",
@@ -472,10 +476,7 @@ def test_container_readiness_probe_can_be_configured(
     assert get_container(subject)["readinessProbe"] == readiness_probe
 
 
-def test_container_resources_is_omitted_when_not_given(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_container_resources_is_omitted_when_not_given(helm_runner: HelmRunner) -> None:
     subject = render_subject(
         helm_runner=helm_runner,
         values={"resources": None},
@@ -483,10 +484,7 @@ def test_container_resources_is_omitted_when_not_given(
     assert "resources" not in get_container(subject)
 
 
-def test_container_resources_can_be_configured(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_container_resources_can_be_configured(helm_runner: HelmRunner) -> None:
     resources = {
         "limits": {
             "cpu": "1000m",
@@ -505,7 +503,6 @@ def test_container_resources_can_be_configured(
 
 
 def test_container_security_context_is_omitted_when_not_given(
-    default_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     subject = render_subject(
@@ -515,10 +512,7 @@ def test_container_security_context_is_omitted_when_not_given(
     assert "securityContext" not in get_container(subject)
 
 
-def test_container_security_context_can_be_configured(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_container_security_context_can_be_configured(helm_runner: HelmRunner) -> None:
     security_context = {"allowPrivilegeEscalation": False}
     subject = render_subject(
         helm_runner=helm_runner,
@@ -528,7 +522,6 @@ def test_container_security_context_can_be_configured(
 
 
 def test_container_volume_mounts_is_omitted_when_not_given(
-    default_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     subject = render_subject(
@@ -538,10 +531,7 @@ def test_container_volume_mounts_is_omitted_when_not_given(
     assert "volumeMounts" not in get_container(subject)
 
 
-def test_container_volume_mounts_can_be_configured(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_container_volume_mounts_can_be_configured(helm_runner: HelmRunner) -> None:
     volume_mounts = [{"name": "sec-ctx-vol", "mountPath": "/data/demo"}]
     subject = render_subject(
         helm_runner=helm_runner,
@@ -550,10 +540,7 @@ def test_container_volume_mounts_can_be_configured(
     assert get_container(subject)["volumeMounts"] == volume_mounts
 
 
-def test_pod_node_selector_is_omitted_when_not_given(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_pod_node_selector_is_omitted_when_not_given(helm_runner: HelmRunner) -> None:
     subject = render_subject(
         helm_runner=helm_runner,
         values={"nodeSelector": None},
@@ -561,10 +548,7 @@ def test_pod_node_selector_is_omitted_when_not_given(
     assert "nodeSelector" not in subject["spec"]["template"]["spec"]
 
 
-def test_pod_node_selector_can_be_configured(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_pod_node_selector_can_be_configured(helm_runner: HelmRunner) -> None:
     node_selector = {"disktype": "ssd"}
     subject = render_subject(
         helm_runner=helm_runner,
@@ -574,7 +558,6 @@ def test_pod_node_selector_can_be_configured(
 
 
 def test_pod_security_context_is_omitted_when_not_given(
-    default_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     subject = render_subject(
@@ -584,10 +567,7 @@ def test_pod_security_context_is_omitted_when_not_given(
     assert "securityContext" not in subject["spec"]["template"]["spec"]
 
 
-def test_pod_security_context_can_be_configured(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_pod_security_context_can_be_configured(helm_runner: HelmRunner) -> None:
     security_context = {
         "fsGroup": 2000,
         "runAsGroup": 3000,
@@ -600,10 +580,7 @@ def test_pod_security_context_can_be_configured(
     assert security_context == subject["spec"]["template"]["spec"]["securityContext"]
 
 
-def test_pod_tolerations_is_omitted_when_not_given(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_pod_tolerations_is_omitted_when_not_given(helm_runner: HelmRunner) -> None:
     subject = render_subject(
         helm_runner=helm_runner,
         values={"tolerations": None},
@@ -611,10 +588,7 @@ def test_pod_tolerations_is_omitted_when_not_given(
     assert "tolerations" not in subject["spec"]["template"]["spec"]
 
 
-def test_pod_tolerations_can_be_configured(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_pod_tolerations_can_be_configured(helm_runner: HelmRunner) -> None:
     tolerations = [
         {
             "effect": "NoSchedule",
@@ -630,10 +604,7 @@ def test_pod_tolerations_can_be_configured(
     assert subject["spec"]["template"]["spec"]["tolerations"] == tolerations
 
 
-def test_pod_volumes_is_omitted_when_not_given(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_pod_volumes_is_omitted_when_not_given(helm_runner: HelmRunner) -> None:
     subject = render_subject(
         helm_runner=helm_runner,
         values={"volumes": None},
@@ -641,10 +612,7 @@ def test_pod_volumes_is_omitted_when_not_given(
     assert "volumes" not in subject["spec"]["template"]["spec"]
 
 
-def test_pod_volumes_can_be_configured(
-    default_values: Dict,
-    helm_runner: HelmRunner,
-) -> None:
+def test_pod_volumes_can_be_configured(helm_runner: HelmRunner) -> None:
     volumes = [
         {
             "name": "sec-ctx-vol",
@@ -660,7 +628,7 @@ def test_pod_volumes_can_be_configured(
 
 def render_subject(
     helm_runner: HelmRunner,
-    name: str = "name-given-to-the-chart",
+    name: str = "name-given-to-the-release",
     values: Optional[Dict] = None,
 ) -> Dict:
     manifests = helm_runner.template(

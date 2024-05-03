@@ -1,4 +1,15 @@
-# -- Grafana sidecar dashboard label
+# -- Provide a name to substitute for the full names of resources.
+fullnameOverride: ""
+
+# -- Label used by Grafana's dashboards sidecar to identify config maps with
+# dashboards that should be added to Grafana. Should match the value of
+# the `sidecar.dashboards.label` configuration in the Grafana chart.
 label: grafana_dashboard
-# -- Grafana sidecar dashboard label value
-labelValue: "1"
+
+# -- Label value used by Grafana's dashboards sidecar to identify config maps
+# with dashboards that should be added to Grafana. Should match the value of
+# the `sidecar.dashboards.labelValue` configuration in the Grafana chart.
+labelValue: ""
+
+# -- Provide a name to substitute for the name of the chart.
+nameOverride: ""

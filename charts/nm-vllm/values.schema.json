@@ -15,6 +15,16 @@
           "default": [],
           "description": "Extra arguments to pass to the API server command.",
           "type": "array"
+        },
+        "host": {
+          "default": "0.0.0.0",
+          "description": "The host that the API server should bind to",
+          "type": "string"
+        },
+        "port": {
+          "default": "80",
+          "description": "The port that the API server should bind to",
+          "type": "integer"
         }
       }
     },
@@ -43,6 +53,10 @@
           "type": "string"
         }
       }
+    },
+    "livenessProbe": {
+      "type": "object",
+      "description": "Liveness probe configuration for the container."
     },
     "modelName": {
       "description": "The name of the model to serve",

@@ -2,7 +2,7 @@ from typing import Dict
 
 import pytest
 
-from tests.test_helpers import get_chart_values, get_chart_yaml
+from tests.test_helpers import get_chart_values, get_chart_values_schema, get_chart_yaml
 
 
 CHART_DIR_NAME = "nm-vllm"
@@ -35,5 +35,10 @@ def chart_yaml() -> Dict:
 
 
 @pytest.fixture
-def default_values() -> Dict:
+def chart_values() -> Dict:
     return get_chart_values(CHART_DIR_NAME)
+
+
+@pytest.fixture
+def chart_values_schema() -> Dict:
+    return get_chart_values_schema(CHART_DIR_NAME)

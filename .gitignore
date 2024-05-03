@@ -16,7 +16,7 @@ junk/
 
 # Helm dependency build generated files
 charts/*/charts
-chart.lock
+Chart.lock
 
 # from: https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore
 venv/
