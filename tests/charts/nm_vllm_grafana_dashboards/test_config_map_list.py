@@ -6,8 +6,8 @@ from pytest_helm_templates import HelmRunner
 def test_expected_dashboard_config_maps_are_included(
     app_version: str,
     chart_name: str,
+    chart_values: Dict,
     chart_version: str,
-    default_values: Dict,
     helm_runner: HelmRunner,
     raw_dashboards: Dict[str, str],
 ) -> None:
@@ -48,7 +48,7 @@ def test_expected_dashboard_config_maps_are_included(
         assert labels["app.kubernetes.io/name"] == chart_name
         assert labels["app.kubernetes.io/version"] == app_version
         assert labels["helm.sh/chart"] == f"{chart_name}-{chart_version}"
-        assert labels[default_values["label"]] == default_values["labelValue"]
+        assert labels[chart_values["label"]] == chart_values["labelValue"]
 
 def test_label_and_label_value_can_be_configured(
     helm_runner: HelmRunner,

@@ -3,7 +3,12 @@ from typing import Dict
 
 import pytest
 
-from tests.test_helpers import chart_path, get_chart_values, get_chart_yaml
+from tests.test_helpers import (
+    chart_path,
+    get_chart_values,
+    get_chart_values_schema,
+    get_chart_yaml,
+)
 
 
 CHART_DIR_NAME = "nm-vllm-grafana-dashboards"
@@ -24,6 +29,16 @@ def chart_name(chart_yaml: Dict) -> str:
 
 
 @pytest.fixture
+def chart_values() -> Dict:
+    return get_chart_values(CHART_DIR_NAME)
+
+
+@pytest.fixture
+def chart_values_schema() -> Dict:
+    return get_chart_values_schema(CHART_DIR_NAME)
+
+
+@pytest.fixture
 def chart_version(chart_yaml: Dict) -> str:
     _chart_version = chart_yaml["version"]
     assert isinstance(_chart_version, str)
@@ -33,11 +48,6 @@ def chart_version(chart_yaml: Dict) -> str:
 @pytest.fixture
 def chart_yaml() -> Dict:
     return get_chart_yaml(CHART_DIR_NAME)
-
-
-@pytest.fixture
-def default_values() -> Dict:
-    return get_chart_values(CHART_DIR_NAME)
 
 
 @pytest.fixture
