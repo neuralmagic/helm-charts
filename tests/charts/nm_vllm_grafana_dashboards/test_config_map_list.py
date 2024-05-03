@@ -50,6 +50,20 @@ def test_expected_dashboard_config_maps_are_included(
         assert labels["helm.sh/chart"] == f"{chart_name}-{chart_version}"
         assert labels[default_values["label"]] == default_values["labelValue"]
 
+def test_label_and_label_value_can_be_configured(
+    helm_runner: HelmRunner,
+) -> None:
+    label = "grafana_dashboard"
+    label_value = "grafana_dashboard_value"
+    subject = render_subject(
+        helm_runner=helm_runner,
+        values={"label": label, "labelValue": label_value},
+    )
+    dashboards = subject["items"]
+    for dashboard in dashboards:
+        labels = dashboard["metadata"]["labels"]
+        assert  labels["grafana_dashboard"] == "grafana_dashboard_value"
+
 
 def render_subject(
     helm_runner: HelmRunner,
