@@ -11,7 +11,7 @@ def test_constant_and_default_values(
     default_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
-    name = "name-given-to-the-chart"
+    name = "name-given-to-the-release"
     subject = render_subject(
         helm_runner=helm_runner,
         name=name,
@@ -76,7 +76,7 @@ def test_full_name_override_overrides_name(
     full_name_override: str,
     helm_runner: HelmRunner,
 ) -> None:
-    name = "name-given-to-the-chart"
+    name = "name-given-to-the-release"
     subject = render_subject(
         helm_runner=helm_runner,
         name=name,
@@ -163,7 +163,7 @@ def test_type_can_be_configured(helm_runner: HelmRunner) -> None:
 
 def render_subject(
     helm_runner: HelmRunner,
-    name: str = "name-given-to-the-chart",
+    name: str = "name-given-to-the-release",
     values: Optional[Dict] = None,
 ) -> Dict:
     manifests = helm_runner.template(

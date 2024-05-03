@@ -11,7 +11,7 @@ def test_expected_dashboard_config_maps_are_included(
     helm_runner: HelmRunner,
     raw_dashboards: Dict[str, str],
 ) -> None:
-    name = "name-given-to-the-chart"
+    name = "name-given-to-the-release"
     subject = render_subject(helm_runner=helm_runner, name=name)
 
     assert subject["apiVersion"] == "v1"
@@ -45,7 +45,7 @@ def test_expected_dashboard_config_maps_are_included(
 
 def render_subject(
     helm_runner: HelmRunner,
-    name: str = "name-given-to-the-chart",
+    name: str = "name-given-to-the-release",
     values: Optional[Dict] = None,
 ) -> Dict:
     manifests = helm_runner.template(
