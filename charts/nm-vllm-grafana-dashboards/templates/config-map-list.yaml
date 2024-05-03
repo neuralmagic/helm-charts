@@ -1,3 +1,8 @@
+{{/*
+  A lot of inspiration taken from:
+    - https://github.com/grafana/helm-charts/blob/main/charts/grafana/templates/dashboards-json-configmap.yaml
+    - https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/templates/grafana/configmap-dashboards.yaml
+*/}}
 apiVersion: v1
 kind: ConfigMapList
 items:
@@ -14,5 +19,3 @@ items:
   data:
     {{ $dashboardName }}.json: {{ $.Files.Get $path | toJson }}
 {{- end }}
-
-# https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/templates/grafana/configmap-dashboards.yaml
