@@ -21,21 +21,3 @@
 .idea/
 *.tmproj
 .vscode/
-#
-# Non-chart files
-.gitignore
-.pre-commit-config.yaml
-.safety-policy.yml
-bin/
-build/
-helm_charts_dev/
-junk/
-pyproject.toml
-requirements.txt
-tests/
-venv/
-whitelist.txt
-
-# Helm dependency build generated files
-charts/*/charts
-Chart.lock

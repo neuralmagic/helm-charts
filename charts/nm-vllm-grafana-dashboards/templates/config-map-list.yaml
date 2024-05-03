@@ -1,0 +1,21 @@
+{{/*
+  A lot of inspiration taken from:
+    - https://github.com/grafana/helm-charts/blob/main/charts/grafana/templates/dashboards-json-configmap.yaml
+    - https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/templates/grafana/configmap-dashboards.yaml
+*/}}
+apiVersion: v1
+kind: ConfigMapList
+items:
+{{- $files := .Files.Glob "dashboards/*.json" }}
+{{- range $path, $fileContents := $files }}
+{{- $dashboardName := regexReplaceAll "(^.*/)(.*)\\.json$" $path "${2}" }}
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: {{ printf "%s-%s" (include "nm-vllm-grafana-dashboards.fullname" $) $dashboardName | trunc 63 | trimSuffix "-" }}
+    labels:
+      {{- include "nm-vllm-grafana-dashboards.labels" $ | nindent 6 }}
+      {{ $.Values.label }}: {{ $.Values.labelValue | quote }}
+  data:
+    {{ $dashboardName }}.json: {{ $.Files.Get $path | toJson }}
+{{- end }}
