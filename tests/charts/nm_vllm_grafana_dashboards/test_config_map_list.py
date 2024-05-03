@@ -62,7 +62,7 @@ def test_label_and_label_value_can_be_configured(
     dashboards = subject["items"]
     for dashboard in dashboards:
         labels = dashboard["metadata"]["labels"]
-        assert  labels["grafana_dashboard"] == "grafana_dashboard_value"
+        assert  labels[label] == label_value
 
 
 def render_subject(
