@@ -38,4 +38,4 @@ whitelist.txt
 
 # Helm dependency build generated files
 charts/*/charts
-chart.lock
+Chart.lock
