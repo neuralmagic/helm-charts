@@ -7,8 +7,8 @@ from pytest_helm_templates import HelmRunner
 def test_constant_and_default_values(
     app_version: str,
     chart_name: str,
+    chart_values: Dict,
     chart_version: str,
-    default_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     name = "name-given-to-the-release"
@@ -40,7 +40,7 @@ def test_constant_and_default_values(
 
     port = spec["ports"][0]
     assert port["name"] == "http"
-    assert port["port"] == default_values["service"]["port"]
+    assert port["port"] == chart_values["service"]["port"]
     assert port["protocol"] == "TCP"
     assert port["targetPort"] == "http"
 
@@ -48,7 +48,7 @@ def test_constant_and_default_values(
     assert selector["app.kubernetes.io/instance"] == name
     assert selector["app.kubernetes.io/name"] == chart_name
 
-    assert spec["type"] == default_values["service"]["type"]
+    assert spec["type"] == chart_values["service"]["type"]
 
 
 @pytest.mark.parametrize(
