@@ -12,7 +12,7 @@ items:
 - apiVersion: v1
   kind: ConfigMap
   metadata:
-    name: {{ template "nm-vllm-grafana-dashboards.fullname" $ }}-grafana-dashboard
+    name: {{ printf "%s-%s" (include "nm-vllm-grafana-dashboards.fullname" $) $dashboardName | trunc 63 | trimSuffix "-" }}
     labels:
       {{- include "nm-vllm-grafana-dashboards.labels" $ | nindent 6 }}
       {{ $.Values.label }}: {{ $.Values.labelValue | quote }}

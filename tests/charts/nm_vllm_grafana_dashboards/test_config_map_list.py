@@ -22,11 +22,24 @@ def test_expected_dashboard_config_maps_are_included(
     assert len(dashboards) == len(raw_dashboards)
 
     for dashboard in dashboards:
+        data = dashboard["data"]
+        # Each dashboard gets its own ConfigMap
+        assert len(data) == 1
+
+        # Start by looking at the data so we know the name of the dashboard
+        dashboard_file_name, dashboard_raw = list(data.items())[0]
+        expected_dashboard = raw_dashboards[dashboard_file_name]
+        assert dashboard_raw == expected_dashboard
+
         assert dashboard["apiVersion"] == "v1"
         assert dashboard["kind"] == "ConfigMap"
 
         metadata = dashboard["metadata"]
         assert metadata
+
+        dashboard_name = dashboard_file_name.replace(".json", "")
+        metadata_name = f"{name}-{chart_name}-{dashboard_name}"[:63].rstrip("-")
+        assert metadata["name"] == metadata_name
 
         labels = metadata["labels"]
         assert labels
@@ -36,11 +49,6 @@ def test_expected_dashboard_config_maps_are_included(
         assert labels["app.kubernetes.io/version"] == app_version
         assert labels["helm.sh/chart"] == f"{chart_name}-{chart_version}"
         assert labels[default_values["label"]] == default_values["labelValue"]
-
-        data = dashboard["data"]
-        for dashboard_file_name, dashboard_raw in data.items():
-            expected_dashboard = raw_dashboards[dashboard_file_name]
-            assert dashboard_raw == expected_dashboard
 
 
 def render_subject(
