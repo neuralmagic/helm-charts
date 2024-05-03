@@ -50,6 +50,7 @@ def test_expected_dashboard_config_maps_are_included(
         assert labels["helm.sh/chart"] == f"{chart_name}-{chart_version}"
         assert labels[chart_values["label"]] == chart_values["labelValue"]
 
+
 def test_label_and_label_value_can_be_configured(
     helm_runner: HelmRunner,
 ) -> None:
@@ -62,7 +63,7 @@ def test_label_and_label_value_can_be_configured(
     dashboards = subject["items"]
     for dashboard in dashboards:
         labels = dashboard["metadata"]["labels"]
-        assert  labels[label] == label_value
+        assert labels[label] == label_value
 
 
 def render_subject(
