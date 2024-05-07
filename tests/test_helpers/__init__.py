@@ -130,3 +130,7 @@ def make_chart_fixtures(
         return helm_runner.computed_values(chart=chart_name)
 
     conftest_globals["chart_computed_values"] = chart_computed_values
+
+
+def make_helm_runner() -> HelmRunner:
+    return HelmRunner(cwd=charts_path())
