@@ -24,7 +24,10 @@ The following options are supported. See [values.yaml](/charts/nm-vllm-productio
 | datasourceUid | string | `"prometheus"` | The uid to use for the Grafana datasource |
 | datasourceUrl | string | `"http://nm-vllm-prometheus-server/"` | The URL to use for the Grafana datasource |
 | grafana | object | -- | Configuration for the Grafana deployment |
+| grafana.sidecar | object | -- | Allows for deployment of containers alongside the Grafana container for purposes such as importing dashboards and datasources. |
+| grafana.sidecar.dashboards | object | -- | Enables the automatic import and management of Grafana dashboards from ConfigMaps or secrets. |
 | grafana.sidecar.dashboards.enabled | bool | `true` | Enable the Grafana sidecar for dashboards so nm-vllm dashboards can be detected and loaded. If disabled, dashboards must be loaded manually. |
+| grafana.sidecar.datasources | object | -- | Enables the dynamic configuration of datasources from ConfigMaps or secrets. |
 | grafana.sidecar.datasources.enabled | bool | `true` | Enable the Grafana sidecar for datasources so the prometheus instance can be configured and used as a Grafana datasource. If disabled, the prometheus datasource must be configured manually. |
 | grafanaDatasourcesLabelOverride | string | `nil` | Label used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.label` configuration in the Grafana chart. |
 | grafanaDatasourcesLabelValueOverride | string | `nil` | Label value used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.labelValue` configuration in the Grafana chart. |
