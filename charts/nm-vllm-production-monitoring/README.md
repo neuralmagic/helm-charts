@@ -19,13 +19,13 @@ The following options are supported. See [values.yaml](/charts/nm-vllm-productio
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| datasourceHttpMethod | string | `"POST"` | The HTTP method to use for the grafana datasource |
-| datasourceUid | string | `"prometheus"` | The uid to use for the grafana datasource |
-| datasourceUrl | string | `"http://nm-vllm-prometheus-server/"` | The URL to use for the grafana datasource |
-| grafana | object | -- | Configuration for the grafana deployment |
-| grafana.sidecar.dashboards.enabled | bool | `true` | Enable the grafana sidecar for dashboards so nm-vllm dashboards can be detected and loaded. If disabled, dashboards must be loaded manually. |
-| grafana.sidecar.datasources.enabled | bool | `true` | Enable the grafana sidecar for datasources so the prometheus instance can be configured and used as a grafana datasource. If disabled, the prometheus datasource must be configured manually. |
-| grafana.sidecar.datasources.label | string | `"grafana_datasource"` | Grafana sidecar datasource label |
-| grafana.sidecar.datasources.labelValue | string | `"1"` | Grafana sidecar datasource label |
+| datasourceHttpMethod | string | `"POST"` | The HTTP method to use for the Grafana datasource |
+| datasourceUid | string | `"prometheus"` | The uid to use for the Grafana datasource |
+| datasourceUrl | string | `"http://nm-vllm-prometheus-server/"` | The URL to use for the Grafana datasource |
+| grafana | object | -- | Configuration for the Grafana deployment |
+| grafana.sidecar.dashboards.enabled | bool | `true` | Enable the Grafana sidecar for dashboards so nm-vllm dashboards can be detected and loaded. If disabled, dashboards must be loaded manually. |
+| grafana.sidecar.datasources.enabled | bool | `true` | Enable the Grafana sidecar for datasources so the prometheus instance can be configured and used as a Grafana datasource. If disabled, the prometheus datasource must be configured manually. |
+| grafanaDatasourcesLabel | string | `"grafana_datasource"` | Label used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.label` configuration in the Grafana chart. |
+| grafanaDatasourcesLabelValue | string | `""` | Label value used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.labelValue` configuration in the Grafana chart. |
 | nm-vllm | object | -- | Configuration for the nm-vllm server deployment and service. |
 | nm-vllm.podAnnotations."prometheus.io/scrape" | string | `"true"` | Enables prometheus to find pod to scrape |

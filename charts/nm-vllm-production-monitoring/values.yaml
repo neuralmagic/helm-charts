@@ -1,32 +1,38 @@
-# -- The HTTP method to use for the grafana datasource
+# -- The HTTP method to use for the Grafana datasource
 datasourceHttpMethod: POST
 
-# -- The uid to use for the grafana datasource
+# -- The uid to use for the Grafana datasource
 datasourceUid: prometheus
 
-# -- The URL to use for the grafana datasource
+# -- The URL to use for the Grafana datasource
 datasourceUrl: http://nm-vllm-prometheus-server/
 
-# -- (object) Configuration for the grafana deployment
+# -- (object) Configuration for the Grafana deployment
 # @default -- --
 grafana:
   sidecar:
     dashboards:
-      # -- Enable the grafana sidecar for dashboards so nm-vllm dashboards can
+      # -- Enable the Grafana sidecar for dashboards so nm-vllm dashboards can
       # be detected and loaded. If disabled, dashboards must be loaded manually.
       enabled: true
 
     datasources:
-      # -- Enable the grafana sidecar for datasources so the prometheus
-      # instance can be configured and used as a grafana datasource. If disabled,
+      # -- Enable the Grafana sidecar for datasources so the prometheus
+      # instance can be configured and used as a Grafana datasource. If disabled,
       # the prometheus datasource must be configured manually.
       enabled: true
 
-      # -- Grafana sidecar datasource label
-      label: grafana_datasource
 
-      # -- Grafana sidecar datasource label
-      labelValue: "1"
+# -- Label used by Grafana's sidecar for datasources to identify config
+# maps with datasources that should be added to Grafana. Should match the value
+# of the `sidecar.datasources.label` configuration in the Grafana chart.
+grafanaDatasourcesLabel: grafana_datasource
+
+
+# -- Label value used by Grafana's sidecar for datasources to identify config
+# maps with datasources that should be added to Grafana. Should match the value
+# of the `sidecar.datasources.labelValue` configuration in the Grafana chart.
+grafanaDatasourcesLabelValue: ""
 
 # -- (object) Configuration for the nm-vllm server deployment and service.
 # @default -- --
