@@ -9,16 +9,16 @@ def assert_dependency_value_override(
     path: List[Union[int, str]],
 ) -> None:
     # First, check the expected default value is there to help detect if a config moves
-    _target = dependency_default_values
+    target = dependency_default_values
     for path_component in path:
-        _target = _target[path_component]
-    assert _target == expected_default_value
+        target = target[path_component]
+    assert target == expected_default_value
 
     # Now it's safe to check the expected override value
-    _target = dependency_computed_values
+    target = dependency_computed_values
     for path_component in path:
-        _target = _target[path_component]
-    assert _target == expected_override_value
+        target = target[path_component]
+    assert target == expected_override_value
 
 
 def assert_values_are_known_to_schema(
