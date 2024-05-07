@@ -2,25 +2,28 @@
   "$schema": "https://json-schema.org/draft/2019-09/schema",
   "description": "Default values for nm-vllm-production-monitoring. Declare variables to be passed into your templates.",
   "properties": {
-    "nm-vllm": {
-      "description": "Namespace of values for nm-vllm.",
-      "type": "object",
-      "properties": {
-        "podAnnotations": {
-          "description": "annotations to add to the pod",
-          "type": "object",
-          "properties": {
-            "prometheus.io/scrape": {
-              "default": true,
-              "description": "allows prometheus to find pod to scrape",
-              "type": "boolean"
-            },
-          }
-        }
-      }
+    "datasourceHttpMethod": {
+      "default": "POST",
+      "description": "The HTTP method to use for the Grafana datasource",
+      "type": "string"
+    },
+    "datasourceScrapeInternal": {
+      "default": "15s",
+      "description": "The interval with which Grafana should scrape the prometheus datasource",
+      "type": "string"
+    },
+    "datasourceUid": {
+      "default": "prometheus",
+      "description": "The uid to use for the Grafana datasource",
+      "type": "string"
+    },
+    "datasourceUrl": {
+      "default": "http://nm-vllm-prometheus-server/",
+      "description": "The URL to use for the Grafana datasource",
+      "type": "string"
     },
     "grafana": {
-      "description": "Namespace of value for Grafana",
+      "description": "Configuration for the Grafana deployment",
       "type": "object",
       "properties": {
         "sidecar": {
@@ -32,7 +35,7 @@
               "type": "string",
               "properties": {
                 "enabled": {
-                  "description": "True is required to enable sidecar datasources.",
+                  "description": "Enable the Grafana sidecar for dashboards so nm-vllm dashboards can be detected and loaded. If disabled, dashboards must be loaded manually.",
                   "type": "string"
                 }
               }
@@ -42,7 +45,7 @@
               "type": "string",
               "properties": {
                 "enabled": {
-                  "description": "True is required to enable sidecar datasources.",
+                  "description": "Enable the Grafana sidecar for datasources so the prometheus instance can be configured and used as a Grafana datasource. If disabled, the prometheus datasource must be configured manually.",
                   "type": "string"
                 },
                 "label": {
@@ -54,6 +57,31 @@
                   "type": "string"
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "grafanaDatasourcesLabelOverride": {
+      "description": "Label used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.label` configuration in the Grafana chart.",
+      "type": "string"
+    },
+    "grafanaDatasourcesLabelValueOverride": {
+      "description": "Label value used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.labelValue` configuration in the Grafana chart.",
+      "type": "string"
+    },
+    "nm-vllm": {
+      "description": "Configuration for the nm-vllm server deployment and service.",
+      "type": "object",
+      "properties": {
+        "podAnnotations": {
+          "description": "annotations to add to the pod",
+          "type": "object",
+          "properties": {
+            "prometheus.io/scrape": {
+              "default": true,
+              "description": "Enables prometheus to find pod to scrape",
+              "type": "boolean"
             }
           }
         }
