@@ -3,6 +3,7 @@ from os import path
 from pathlib import Path
 from typing import Dict
 
+import pytest
 import yaml
 
 
@@ -38,3 +39,50 @@ def get_chart_values_schema(chart_name: str) -> Dict:
         chart_values_schema = json.loads(file.read())
     assert isinstance(chart_values_schema, Dict)
     return chart_values_schema
+
+
+def make_chart_fixtures(
+    chart_dir_name: str,
+    conftest_globals: Dict,
+) -> None:
+    @pytest.fixture(scope="module")
+    def app_version(chart_yaml: Dict) -> str:
+        _app_version = chart_yaml["appVersion"]
+        assert isinstance(_app_version, str)
+        return _app_version
+
+    conftest_globals["app_version"] = app_version
+
+    @pytest.fixture(scope="module")
+    def chart_name(chart_yaml: Dict) -> str:
+        _chart_name = chart_yaml["name"]
+        assert isinstance(_chart_name, str)
+        return _chart_name
+
+    conftest_globals["chart_name"] = chart_name
+
+    @pytest.fixture(scope="module")
+    def chart_version(chart_yaml: Dict) -> str:
+        _chart_version = chart_yaml["version"]
+        assert isinstance(_chart_version, str)
+        return _chart_version
+
+    conftest_globals["chart_version"] = chart_version
+
+    @pytest.fixture(scope="module")
+    def chart_yaml() -> Dict:
+        return get_chart_yaml(chart_dir_name)
+
+    conftest_globals["chart_yaml"] = chart_yaml
+
+    @pytest.fixture(scope="module")
+    def chart_values() -> Dict:
+        return get_chart_values(chart_dir_name)
+
+    conftest_globals["chart_values"] = chart_values
+
+    @pytest.fixture(scope="module")
+    def chart_values_schema() -> Dict:
+        return get_chart_values_schema(chart_dir_name)
+
+    conftest_globals["chart_values_schema"] = chart_values_schema
