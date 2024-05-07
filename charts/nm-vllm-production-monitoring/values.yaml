@@ -1,6 +1,9 @@
 # -- The HTTP method to use for the Grafana datasource
 datasourceHttpMethod: POST
 
+# -- The interval with which Grafana should scrape the prometheus datasource
+datasourceScrapeInternal: 15s
+
 # -- The uid to use for the Grafana datasource
 datasourceUid: prometheus
 
