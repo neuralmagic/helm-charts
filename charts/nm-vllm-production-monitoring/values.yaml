@@ -1,20 +1,25 @@
-# -- (object) Configuration for the nm-vllm server deployment and service.
-# @default -- --
-nm-vllm:
-  podAnnotations:
-      # -- Enables prometheus to find pod to scrape
-    prometheus.io/scrape: "true"
+# -- The HTTP method to use for the grafana datasource
+datasourceHttpMethod: POST
 
-# -- Grafana sidecar values
+# -- The uid to use for the grafana datasource
+datasourceUid: prometheus
+
+# -- The URL to use for the grafana datasource
+datasourceUrl: http://nm-vllm-prometheus-server/
+
+# -- (object) Configuration for the grafana deployment
 # @default -- --
 grafana:
   sidecar:
     dashboards:
-      # -- True is required to enable sidecar dashboards
+      # -- Enable the grafana sidecar for dashboards so nm-vllm dashboards can
+      # be detected and loaded. If disabled, dashboards must be loaded manually.
       enabled: true
 
     datasources:
-      # -- True is required to enable sidecar datasources
+      # -- Enable the grafana sidecar for datasources so the prometheus
+      # instance can be configured and used as a grafana datasource. If disabled,
+      # the prometheus datasource must be configured manually.
       enabled: true
 
       # -- Grafana sidecar datasource label
@@ -23,11 +28,9 @@ grafana:
       # -- Grafana sidecar datasource label
       labelValue: "1"
 
-# -- Grafana datasource http method
-datasourceHttpMethod: POST
-
-# -- Grafana datasource uid
-datasourceUid: prometheus
-
-# -- Grafana datasource url
-datasourceUrl: http://nm-vllm-prometheus-server/
+# -- (object) Configuration for the nm-vllm server deployment and service.
+# @default -- --
+nm-vllm:
+  podAnnotations:
+      # -- Enables prometheus to find pod to scrape
+    prometheus.io/scrape: "true"
