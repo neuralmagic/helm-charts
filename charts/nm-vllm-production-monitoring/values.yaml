@@ -1,10 +1,16 @@
-# -- (object) Configuration for the nm-vllm server deployment and service.
-# @default -- --
-nm-vllm:
-  podAnnotations:
-      # -- Enables prometheus to find pod to scrape.
-    prometheus.io/scrape: "true"
-# -- Namespace of values for Grafana
+# -- The HTTP method to use for the Grafana datasource
+datasourceHttpMethod: POST
+
+# -- The interval with which Grafana should scrape the prometheus datasource
+datasourceScrapeInternal: 15s
+
+# -- The uid to use for the Grafana datasource
+datasourceUid: prometheus
+
+# -- The URL to use for the Grafana datasource
+datasourceUrl: http://nm-vllm-prometheus-server/
+
+# -- (object) Configuration for the Grafana deployment
 # @default -- --
 grafana:
 
@@ -17,26 +23,34 @@ grafana:
     # @default -- --
     dashboards:
 
-      # -- True is required to enable sidecar dashboards.
+      # -- Enable the Grafana sidecar for dashboards so nm-vllm dashboards can
+      # be detected and loaded. If disabled, dashboards must be loaded manually.
       enabled: true
 
     # -- Enables the dynamic configuration of datasources from ConfigMaps or secrets.
     # @default -- --
     datasources:
-      # -- True is required to enable sidecar datasources.
+    
+      # -- Enable the Grafana sidecar for datasources so the prometheus
+      # instance can be configured and used as a Grafana datasource. If disabled,
+      # the prometheus datasource must be configured manually.
       enabled: true
 
-      # -- Grafana sidecar datasource label.
-      label: grafana_datasource
 
-      # -- Grafana sidecar datasource label value.
-      labelValue: ""
+# -- Label used by Grafana's sidecar for datasources to identify config
+# maps with datasources that should be added to Grafana. Should match the value
+# of the `sidecar.datasources.label` configuration in the Grafana chart.
+grafanaDatasourcesLabelOverride: null
 
-# -- Grafana datasource http method.
-datasourceHttpMethod: POST
 
-# -- Grafana datasource uid.
-datasourceUid: prometheus
+# -- Label value used by Grafana's sidecar for datasources to identify config
+# maps with datasources that should be added to Grafana. Should match the value
+# of the `sidecar.datasources.labelValue` configuration in the Grafana chart.
+grafanaDatasourcesLabelValueOverride: null
 
-# -- Grafana datasource url.
-datasourceUrl: http://nm-vllm-prometheus-server/
+# -- (object) Configuration for the nm-vllm server deployment and service.
+# @default -- --
+nm-vllm:
+  podAnnotations:
+      # -- Enables prometheus to find pod to scrape
+    prometheus.io/scrape: "true"

@@ -1,5 +1,10 @@
+conftest
+datasources
+globals
 joinpath
 liveness
 loadbalancer
 normpath
+repo
 tolerations
+vllm

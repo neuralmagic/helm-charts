@@ -1,0 +1,23 @@
+{{/*
+  A lot of inspiration taken from:
+    - https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/templates/grafana/configmaps-datasources.yaml
+*/}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "nm-vllm-production-monitoring.fullname" . }}-grafana-datasource
+  labels:
+    {{ include "nm-vllm-production-monitoring.grafanaDatasourcesLabel" $ }}: {{ include "nm-vllm-production-monitoring.grafanaDatasourcesLabelValue" $ | quote}}
+data:
+  datasource.yaml: |-
+    apiVersion: 1
+    datasources:
+    - access: proxy
+      isDefault: true
+      jsonData:
+        httpMethod: {{ .Values.datasourceHttpMethod }}
+        timeInterval: {{ .Values.datasourceScrapeInterval | default "15s" }}
+      name: Prometheus
+      type: prometheus
+      uid: {{ .Values.datasourceUid }}
+      url: {{ .Values.datasourceUrl }}
