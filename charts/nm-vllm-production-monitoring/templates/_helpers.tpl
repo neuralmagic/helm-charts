@@ -49,3 +49,29 @@ Selector labels
 app.kubernetes.io/name: {{ include "nm-vllm-production-monitoring.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Get the label used by grafana to identify datasource config maps
+*/}}
+{{- define "nm-vllm-production-monitoring.grafanaDatasourcesLabel" -}}
+{{- if .Values.grafanaDatasourcesLabelOverride -}}
+{{- .Values.grafanaDatasourcesLabelOverride -}}
+{{- else if (((.Values.grafana).sidecar).datasources).label }}
+{{- .Values.grafana.sidecar.datasources.label -}}
+{{- else -}}
+grafana_datasource
+{{- end -}}
+{{- end }}
+
+{{/*
+Get the label value used by grafana to identify datasource config maps
+*/}}
+{{- define "nm-vllm-production-monitoring.grafanaDatasourcesLabelValue" -}}
+{{- if .Values.grafanaDatasourcesLabelValueOverride -}}
+{{- .Values.grafanaDatasourcesLabelValueOverride -}}
+{{- else if (((.Values.grafana).sidecar).datasources).labelValue }}
+{{- .Values.grafana.sidecar.datasources.labelValue -}}
+{{- else -}}
+{{/* intentionally blank because grafana default is "" */}}
+{{- end -}}
+{{- end }}

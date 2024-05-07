@@ -7,7 +7,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "nm-vllm-production-monitoring.fullname" . }}-grafana-datasource
   labels:
-    {{ $.Values.grafanaDatasourcesLabel }}: {{ $.Values.grafanaDatasourcesLabelValue | quote }}
+    {{ include "nm-vllm-production-monitoring.grafanaDatasourcesLabel" $ }}: {{ include "nm-vllm-production-monitoring.grafanaDatasourcesLabelValue" $ | quote}}
 data:
   datasource.yaml: |-
     apiVersion: 1

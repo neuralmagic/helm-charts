@@ -26,13 +26,13 @@ grafana:
 # -- Label used by Grafana's sidecar for datasources to identify config
 # maps with datasources that should be added to Grafana. Should match the value
 # of the `sidecar.datasources.label` configuration in the Grafana chart.
-grafanaDatasourcesLabel: grafana_datasource
+grafanaDatasourcesLabelOverride: null
 
 
 # -- Label value used by Grafana's sidecar for datasources to identify config
 # maps with datasources that should be added to Grafana. Should match the value
 # of the `sidecar.datasources.labelValue` configuration in the Grafana chart.
-grafanaDatasourcesLabelValue: ""
+grafanaDatasourcesLabelValueOverride: null
 
 # -- (object) Configuration for the nm-vllm server deployment and service.
 # @default -- --
