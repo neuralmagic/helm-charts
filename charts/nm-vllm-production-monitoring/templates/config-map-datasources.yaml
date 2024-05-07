@@ -12,12 +12,11 @@ data:
   datasource.yaml: |-
     apiVersion: 1
     datasources:
-{{- $scrapeInterval := .Values.scrapeInterval | default "15s" }}
     - access: proxy
       isDefault: true
       jsonData:
         httpMethod: {{ .Values.datasourceHttpMethod }}
-        timeInterval: {{ $scrapeInterval }}
+        timeInterval: {{ .Values.scrapeInterval | default "15s" }}
       name: Prometheus
       type: prometheus
       uid: {{ .Values.datasourceUid }}
