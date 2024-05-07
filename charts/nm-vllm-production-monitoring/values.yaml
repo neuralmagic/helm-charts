@@ -30,7 +30,7 @@ grafana:
     # -- Enables the dynamic configuration of datasources from ConfigMaps or secrets.
     # @default -- --
     datasources:
-    
+
       # -- Enable the Grafana sidecar for datasources so the prometheus
       # instance can be configured and used as a Grafana datasource. If disabled,
       # the prometheus datasource must be configured manually.

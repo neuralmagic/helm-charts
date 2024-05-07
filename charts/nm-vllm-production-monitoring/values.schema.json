@@ -28,25 +28,25 @@
       "properties": {
         "sidecar": {
           "description": "Allows for deployment of containers alongside the Grafana container for purposes such as importing dashboards and datasources.",
-          "type": "string",
+          "type": "object",
           "properties": {
             "dashboards": {
               "description": "Enables the automatic import and management of Grafana dashboards from ConfigMaps or secrets.",
-              "type": "string",
+              "type": "object",
               "properties": {
                 "enabled": {
                   "description": "Enable the Grafana sidecar for dashboards so nm-vllm dashboards can be detected and loaded. If disabled, dashboards must be loaded manually.",
-                  "type": "string"
+                  "type": "boolean"
                 }
               }
             },
             "datasources": {
               "description": "Enables the dynamic configuration of datasources from ConfigMaps or secrets.",
-              "type": "string",
+              "type": "object",
               "properties": {
                 "enabled": {
                   "description": "Enable the Grafana sidecar for datasources so the prometheus instance can be configured and used as a Grafana datasource. If disabled, the prometheus datasource must be configured manually.",
-                  "type": "string"
+                  "type": "boolean"
                 },
                 "label": {
                   "description": "Grafana sidecar datasource label.",
@@ -63,12 +63,10 @@
       }
     },
     "grafanaDatasourcesLabelOverride": {
-      "description": "Label used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.label` configuration in the Grafana chart.",
-      "type": "string"
+      "description": "Label used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.label` configuration in the Grafana chart."
     },
     "grafanaDatasourcesLabelValueOverride": {
-      "description": "Label value used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.labelValue` configuration in the Grafana chart.",
-      "type": "string"
+      "description": "Label value used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.labelValue` configuration in the Grafana chart."
     },
     "nm-vllm": {
       "description": "Configuration for the nm-vllm server deployment and service.",
@@ -79,9 +77,9 @@
           "type": "object",
           "properties": {
             "prometheus.io/scrape": {
-              "default": true,
+              "default": "true",
               "description": "Enables prometheus to find pod to scrape",
-              "type": "boolean"
+              "type": "string"
             }
           }
         }
