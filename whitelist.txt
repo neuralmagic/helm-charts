@@ -1,3 +1,5 @@
+conftest
+globals
 joinpath
 liveness
 loadbalancer
