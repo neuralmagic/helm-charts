@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "description": "Default values for nm-vllm-production-monitoring. Declare variables to be passed into your templates.",
+  "properties": {
+    "nm-vllm": {
+      "description": "Namespace of values for nm-vllm.",
+      "type": "object",
+      "properties": {
+        "podAnnotations": {
+          "description": "annotations to add to the pod",
+          "type": "object",
+          "properties": {
+            "prometheus.io/scrape": {
+              "default": true,
+              "description": "allows prometheus to find pod to scrape",
+              "type": "boolean"
+            },
+          }
+        }
+      }
+    },
+    "grafana": {
+      "description": "Namespace of value for Grafana",
+      "type": "object",
+      "properties": {
+        "sidecar": {
+          "description": "Allows for deployment of containers alongside the Grafana container for purposes such as importing dashboards and datasources.",
+          "type": "string",
+          "properties": {
+            "dashboards": {
+              "description": "Enables the automatic import and management of Grafana dashboards from ConfigMaps or secrets.",
+              "type": "string",
+              "properties": {
+                "enabled": {
+                  "description": "True is required to enable sidecar datasources.",
+                  "type": "string"
+                }
+              }
+            },
+            "datasources": {
+              "description": "Enables the dynamic configuration of datasources from ConfigMaps or secrets.",
+              "type": "string",
+              "properties": {
+                "enabled": {
+                  "description": "True is required to enable sidecar datasources.",
+                  "type": "string"
+                },
+                "label": {
+                  "description": "Grafana sidecar datasource label.",
+                  "type": "string"
+                },
+                "labelValue": {
+                  "description": "Grafana sidecar datasource label value.",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "nm-vllm",
+    "grafana"
+  ],
+  "type": "object"
+}
