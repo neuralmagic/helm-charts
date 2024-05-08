@@ -11,10 +11,10 @@ CHART_DIR_NAME = "nm-vllm-production-monitoring"
 
 # Override helm_runner fixture so we can use it as a hook to ensure chart
 # dependencies are installed.
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="package")
 def helm_runner() -> HelmRunner:
     helm_runner = make_helm_runner()
-    helm_runner.dependency_update(chart=CHART_DIR_NAME)
+    helm_runner.dependency_update_if_missing(chart=CHART_DIR_NAME)
     return helm_runner
 
 
