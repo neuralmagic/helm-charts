@@ -34,6 +34,17 @@ entries:
   nm-vllm-grafana-dashboards:
   - apiVersion: v2
     appVersion: v0.0.1
+    created: "2024-05-08T19:28:53.975594098Z"
+    description: A Helm chart for making NM vLLM production monitoring dashboards
+      available for Grafana dashboard sidecar deployments to find.
+    digest: 3a58a599a8aaf5f608b749773e88fe251a8d9aa32389bc83a0c85b6d6f909fd7
+    name: nm-vllm-grafana-dashboards
+    type: application
+    urls:
+    - https://github.com/neuralmagic/helm-charts/releases/download/nm-vllm-grafana-dashboards-1.0.0/nm-vllm-grafana-dashboards-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
+    appVersion: v0.0.1
     created: "2024-05-03T20:54:11.761799723Z"
     description: A Helm chart for making NM vLLM production monitoring dashboards
       available for Grafana dashboard sidecar deployments to find.
@@ -59,4 +70,4 @@ entries:
     urls:
     - https://github.com/neuralmagic/helm-charts/releases/download/nm-vllm-production-monitoring-0.0.1/nm-vllm-production-monitoring-0.0.1.tgz
     version: 0.0.1
-generated: "2024-05-03T20:54:11.91057279Z"
+generated: "2024-05-08T19:28:53.975645203Z"
