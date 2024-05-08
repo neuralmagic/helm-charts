@@ -48,7 +48,7 @@ def test_expected_dashboard_config_maps_are_included(
         assert labels["app.kubernetes.io/name"] == chart_name
         assert labels["app.kubernetes.io/version"] == app_version
         assert labels["helm.sh/chart"] == f"{chart_name}-{chart_version}"
-        assert labels[chart_values["label"]] == chart_values["labelValue"]
+        assert labels["grafana_dashboard"] == ""
 
 
 def test_label_and_label_value_can_be_configured(
@@ -58,8 +58,64 @@ def test_label_and_label_value_can_be_configured(
     label_value = "grafana_dashboard_value"
     subject = render_subject(
         helm_runner=helm_runner,
-        values={"label": label, "labelValue": label_value},
+        values={
+            "grafanaDashboardsLabelOverride": label,
+            "grafanaDashboardsLabelValueOverride": label_value,
+        },
     )
+    dashboards = subject["items"]
+    for dashboard in dashboards:
+        labels = dashboard["metadata"]["labels"]
+        assert labels[label] == label_value
+
+
+def test_label_and_label_value_can_take_values_from_grafana_values(
+    helm_runner: HelmRunner,
+) -> None:
+    label = "grafana_dashboard_label"
+    label_value = "grafana_dashboard_label_value"
+    subject = render_subject(
+        helm_runner=helm_runner,
+        values={
+            "grafana": {
+                "sidecar": {
+                    "dashboards": {
+                        "label": label,
+                        "labelValue": label_value,
+                    },
+                },
+            },
+        },
+    )
+    dashboards = subject["items"]
+    for dashboard in dashboards:
+        labels = dashboard["metadata"]["labels"]
+        assert labels[label] == label_value
+
+
+def test_label_and_label_value_defaults_match_grafana_defaults(
+    grafana_default_values: Dict,
+    helm_runner: HelmRunner,
+) -> None:
+    subject = render_subject(
+        helm_runner=helm_runner,
+        # Make sure we don't get the values from grafana values
+        values={
+            "grafana": {
+                "sidecar": {
+                    "dashboards": {
+                        "label": None,
+                        "labelValue": None,
+                    },
+                },
+            },
+        },
+    )
+
+    dashboards_config = grafana_default_values["sidecar"]["dashboards"]
+    label = dashboards_config["label"]
+    label_value = dashboards_config["labelValue"]
+
     dashboards = subject["items"]
     for dashboard in dashboards:
         labels = dashboard["metadata"]["labels"]
