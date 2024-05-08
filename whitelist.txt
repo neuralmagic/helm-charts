@@ -1,4 +1,5 @@
 conftest
+datasource
 datasources
 globals
 joinpath
@@ -7,4 +8,6 @@ loadbalancer
 normpath
 repo
 tolerations
+uid
+unparsed
 vllm
