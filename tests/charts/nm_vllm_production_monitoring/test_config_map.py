@@ -43,7 +43,7 @@ def test_grafana_datasources_label_and_label_value_can_take_values_from_grafana_
 
 
 def test_grafana_datasources_label_and_label_value_defaults_match_grafana_defaults(
-    grafana_default_values: Dict,
+    grafana_dependency_default_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
     subject = render_subject(
@@ -61,7 +61,7 @@ def test_grafana_datasources_label_and_label_value_defaults_match_grafana_defaul
         },
     )
 
-    datasources_config = grafana_default_values["sidecar"]["datasources"]
+    datasources_config = grafana_dependency_default_values["sidecar"]["datasources"]
     label = datasources_config["label"]
     label_value = datasources_config["labelValue"]
 

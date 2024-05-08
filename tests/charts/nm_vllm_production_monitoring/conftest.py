@@ -40,7 +40,7 @@ def _get_dependency_values(
 
 # Cache dependency default values because they can be slow to fetch
 @pytest.fixture(scope="package")
-def nm_vllm_default_values(
+def nm_vllm_dependency_default_values(
     chart_dependencies: ChartDependencies,
     chart_name: str,
     helm_runner: HelmRunner,
@@ -53,7 +53,7 @@ def nm_vllm_default_values(
 
 
 @pytest.fixture(scope="package")
-def grafana_default_values(
+def grafana_dependency_default_values(
     chart_dependencies: ChartDependencies,
     chart_name: str,
     helm_runner: HelmRunner,
