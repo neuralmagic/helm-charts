@@ -6,24 +6,20 @@
       "description": "Provide a name to substitute for the full names of resources.",
       "type": "string"
     },
-    "label": {
+    "grafanaDashboardsLabelOverride": {
       "default": "grafana_dashboard",
       "description": "Label used by Grafana's dashboards sidecar to identify config maps with dashboards that should be added to Grafana. Should match the value of the `sidecar.dashboards.labelValue` configuration in the Grafana chart.",
-      "type": "string"
+      "type": ["null", "string"]
     },
-    "labelValue": {
+    "grafanaDashboardsLabelValueOverride": {
       "default": "",
       "description": "Label value used by Grafana's dashboards sidecar to identify config maps with dashboards that should be added to Grafana. Should match the value of the `sidecar.dashboards.labelValue` configuration in the Grafana chart.",
-      "type": "string"
+      "type": ["null", "string"]
     },
     "nameOverride": {
       "description": "Provide a name to substitute for the name of the chart.",
       "type": "string"
     }
   },
-  "required": [
-    "label",
-    "labelValue"
-  ],
   "type": "object"
 }

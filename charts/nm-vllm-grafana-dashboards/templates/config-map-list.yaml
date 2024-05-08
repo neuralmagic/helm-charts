@@ -17,7 +17,7 @@ items:
     name: {{ printf "%s-%s" (include "nm-vllm-grafana-dashboards.fullname" $) $dashboardName | trunc 63 | trimSuffix "-" }}
     labels:
       {{- include "nm-vllm-grafana-dashboards.labels" $ | nindent 6 }}
-      {{ $.Values.label }}: {{ $.Values.labelValue | quote }}
+      {{ include "nm-vllm-grafana-dashboards.grafanaDashboardsLabel" $ }}: {{ include "nm-vllm-grafana-dashboards.grafanaDashboardsLabelValue" $ | quote}}
   data:
     {{ $dashboardName }}.json: {{ $.Files.Get $path | toJson }}
 {{- end }}
