@@ -136,8 +136,20 @@ def test_datasource_http_method_can_be_configured(helm_runner: HelmRunner) -> No
     assert actual_http_method == http_method
 
 
+def test_datasource_is_default_can_be_configured(helm_runner: HelmRunner) -> None:
+    is_default = False
+    subject = render_subject(
+        helm_runner=helm_runner,
+        values={"datasource": {"isDefault": is_default}},
+    )
+    datasource_yaml_unparsed = subject["data"]["datasource.yaml"]
+    datasource_yaml = yaml.safe_load(datasource_yaml_unparsed)
+    datasource = datasource_yaml["datasources"][0]
+    assert datasource["isDefault"] == is_default
+
+
 def test_datasource_name_can_be_configured(helm_runner: HelmRunner) -> None:
-    name = "POST"
+    name = "not-prometheus"
     subject = render_subject(
         helm_runner=helm_runner,
         values={"datasource": {"name": name}},

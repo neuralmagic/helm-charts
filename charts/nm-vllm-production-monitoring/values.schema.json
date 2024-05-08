@@ -10,6 +10,11 @@
           "description": "The HTTP method to use for the Grafana prometheus datasource",
           "type": "string"
         },
+        "isDefault": {
+          "default": true,
+          "description": "Toggles whether or not the Grafana prometheus datasource should be the default Grafana datasource.",
+          "type": "boolean"
+        },
         "name": {
           "default": "Prometheus",
           "description": "The name to be given to the Grafana prometheus datasource.",

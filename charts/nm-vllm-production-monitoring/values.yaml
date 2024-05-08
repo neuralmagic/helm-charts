@@ -5,6 +5,10 @@ datasource:
   # -- The HTTP method to use for the Grafana prometheus datasource.
   httpMethod: POST
 
+  # -- Toggles whether or not the Grafana prometheus datasource should be the
+  # default Grafana datasource.
+  isDefault: true
+
   # -- The name to use for the Grafana prometheus datasource.
   name: Prometheus
 

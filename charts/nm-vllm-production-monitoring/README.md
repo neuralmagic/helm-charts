@@ -21,6 +21,7 @@ The following options are supported. See [values.yaml](/charts/nm-vllm-productio
 |-----|------|---------|-------------|
 | datasource | object | -- | Configuration for the datasource connecting prometheus and grafana. |
 | datasource.httpMethod | string | `"POST"` | The HTTP method to use for the Grafana prometheus datasource. |
+| datasource.isDefault | bool | `true` | Toggles whether or not the Grafana prometheus datasource should be the default Grafana datasource. |
 | datasource.name | string | `"Prometheus"` | The name to use for the Grafana prometheus datasource. |
 | datasource.timeInterval | string | `"15s"` | The time interval with which Grafana should scrape the prometheus datasource. |
 | datasource.uid | string | `"prometheus"` | The uid to use for the Grafana prometheus datasource. |
