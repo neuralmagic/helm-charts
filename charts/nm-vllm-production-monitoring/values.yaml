@@ -2,16 +2,16 @@
 # @default -- --
 datasource:
 
-  # -- The HTTP method to use for the Grafana datasource
+  # -- The HTTP method to use for the Grafana datasource.
   httpMethod: POST
 
-  # -- The interval with which Grafana should scrape the prometheus datasource
-  scrapeInternal: 15s
+  # -- The time interval with which Grafana should scrape the prometheus datasource.
+  timeInterval: 15s
 
-  # -- The uid to use for the Grafana datasource
+  # -- The uid to use for the Grafana datasource.
   uid: prometheus
 
-  # -- The URL to use for the Grafana datasource
+  # -- The URL to use for the Grafana datasource.
   url: http://nm-vllm-prometheus-server/
 
 # -- (object) Configuration for the Grafana deployment

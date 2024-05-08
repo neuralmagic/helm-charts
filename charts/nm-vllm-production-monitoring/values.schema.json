@@ -10,7 +10,7 @@
           "description": "The HTTP method to use for the Grafana datasource",
           "type": "string"
         },
-        "scrapeInternal": {
+        "timeInterval": {
           "default": "15s",
           "description": "The interval with which Grafana should scrape the prometheus datasource",
           "type": "string"

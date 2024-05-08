@@ -16,7 +16,7 @@ data:
       isDefault: true
       jsonData:
         httpMethod: {{ .Values.datasource.httpMethod }}
-        timeInterval: {{ .Values.datasource.scrapeInterval | default "15s" }}
+        timeInterval: {{ .Values.datasource.timeInterval | default "15s" }}
       name: Prometheus
       type: prometheus
       uid: {{ .Values.datasource.uid }}
