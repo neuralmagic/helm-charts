@@ -1,7 +1,8 @@
 from typing import Dict, Optional
 
-from pytest_helm_templates import HelmRunner
 import yaml
+from pytest_helm_templates import HelmRunner
+
 
 def test_grafana_datasources_label_and_label_value_can_be_configured(
     helm_runner: HelmRunner,
@@ -75,10 +76,8 @@ def test_datasource_http_method_can_be_configured(
     subject = render_subject(
         helm_runner=helm_runner,
         values={
-            "datasource": {
-                "httpMethod": http_method
-            },
-        }
+            "datasource": {"httpMethod": http_method},
+        },
     )
     datasource_yaml_unparsed = subject["data"]["datasource.yaml"]
     datasource_yaml = yaml.safe_load(datasource_yaml_unparsed)
@@ -95,10 +94,8 @@ def test_datasource_scrape_internal_can_be_configured(
     subject = render_subject(
         helm_runner=helm_runner,
         values={
-            "datasource": {
-                "scrapeInterval": scrape_interval
-            },
-        }
+            "datasource": {"scrapeInterval": scrape_interval},
+        },
     )
     datasource_yaml_unparsed = subject["data"]["datasource.yaml"]
     datasource_yaml = yaml.safe_load(datasource_yaml_unparsed)
@@ -115,10 +112,8 @@ def test_datasource_uid_can_be_configured(
     subject = render_subject(
         helm_runner=helm_runner,
         values={
-            "datasource": {
-                "uid": uid
-            },
-        }
+            "datasource": {"uid": uid},
+        },
     )
     datasource_yaml_unparsed = subject["data"]["datasource.yaml"]
     datasource_yaml = yaml.safe_load(datasource_yaml_unparsed)
@@ -135,10 +130,8 @@ def test_datasource_url_can_be_configured(
     subject = render_subject(
         helm_runner=helm_runner,
         values={
-            "datasource": {
-                "url": url
-            },
-        }
+            "datasource": {"url": url},
+        },
     )
     datasource_yaml_unparsed = subject["data"]["datasource.yaml"]
     datasource_yaml = yaml.safe_load(datasource_yaml_unparsed)
