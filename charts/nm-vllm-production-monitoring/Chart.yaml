@@ -8,7 +8,7 @@ dependencies:
   repository: https://helm.neuralmagic.com
   version: 0.1.2
 - name: nm-vllm-grafana-dashboards
-  version: 0.0.1
+  version: 1.0.0
   repository: https://helm.neuralmagic.com
 - name: prometheus
   repository: https://prometheus-community.github.io/helm-charts
