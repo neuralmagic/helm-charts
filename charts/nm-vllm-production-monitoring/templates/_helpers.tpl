@@ -72,6 +72,6 @@ Get the label value used by grafana to identify datasource config maps
 {{- else if (((.Values.grafana).sidecar).datasources).labelValue }}
 {{- .Values.grafana.sidecar.datasources.labelValue -}}
 {{- else -}}
-{{/* intentionally blank because grafana default is "" */}}
+{{- /* intentionally blank because grafana default is "" */ -}}
 {{- end -}}
 {{- end }}
