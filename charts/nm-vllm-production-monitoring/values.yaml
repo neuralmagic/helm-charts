@@ -1,3 +1,5 @@
+# -- (object) Configuration for the datasource connecting prometheus and grafana.
+# @default -- --
 datasource:
 
   # -- The HTTP method to use for the Grafana datasource

@@ -2,25 +2,31 @@
   "$schema": "https://json-schema.org/draft/2019-09/schema",
   "description": "Default values for nm-vllm-production-monitoring. Declare variables to be passed into your templates.",
   "properties": {
-    "datasourceHttpMethod": {
-      "default": "POST",
-      "description": "The HTTP method to use for the Grafana datasource",
-      "type": "string"
-    },
-    "datasourceScrapeInternal": {
-      "default": "15s",
-      "description": "The interval with which Grafana should scrape the prometheus datasource",
-      "type": "string"
-    },
-    "datasourceUid": {
-      "default": "prometheus",
-      "description": "The uid to use for the Grafana datasource",
-      "type": "string"
-    },
-    "datasourceUrl": {
-      "default": "http://nm-vllm-prometheus-server/",
-      "description": "The URL to use for the Grafana datasource",
-      "type": "string"
+    "datasource": {
+      "description": "Configuration for the datasource connecting prometheus and grafana.",
+      "properties": {
+        "httpMethod": {
+          "default": "POST",
+          "description": "The HTTP method to use for the Grafana datasource",
+          "type": "string"
+        },
+        "scrapeInternal": {
+          "default": "15s",
+          "description": "The interval with which Grafana should scrape the prometheus datasource",
+          "type": "string"
+        },
+        "uid": {
+          "default": "prometheus",
+          "description": "The uid to use for the Grafana datasource",
+          "type": "string"
+        },
+        "url": {
+          "default": "http://nm-vllm-prometheus-server/",
+          "description": "The URL to use for the Grafana datasource",
+          "type": "string"
+        }
+      },
+      "type": "object"
     },
     "grafana": {
       "description": "Configuration for the Grafana deployment",
@@ -55,10 +61,12 @@
       }
     },
     "grafanaDatasourcesLabelOverride": {
-      "description": "Label used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.label` configuration in the Grafana chart."
+      "description": "Label used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.label` configuration in the Grafana chart.",
+      "type": ["null", "string"]
     },
     "grafanaDatasourcesLabelValueOverride": {
-      "description": "Label value used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.labelValue` configuration in the Grafana chart."
+      "description": "Label value used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.labelValue` configuration in the Grafana chart.",
+      "type": ["null", "string"]
     },
     "nm-vllm": {
       "description": "Configuration for the nm-vllm server deployment and service.",
