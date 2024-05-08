@@ -12,9 +12,7 @@ def helm_runner() -> HelmRunner:
 
 
 @pytest.fixture(scope="session")
-def grafana_default_values(
-    helm_runner: HelmRunner,
-) -> Dict:
+def grafana_default_values(helm_runner: HelmRunner) -> Dict:
     return helm_runner.values(
         chart="grafana",
         repo="https://grafana.github.io/helm-charts",
