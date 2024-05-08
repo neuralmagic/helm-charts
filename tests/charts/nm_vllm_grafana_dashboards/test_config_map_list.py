@@ -8,6 +8,7 @@ def test_expected_dashboard_config_maps_are_included(
     chart_name: str,
     chart_values: Dict,
     chart_version: str,
+    grafana_default_values: Dict,
     helm_runner: HelmRunner,
     raw_dashboards: Dict[str, str],
 ) -> None:
@@ -20,6 +21,10 @@ def test_expected_dashboard_config_maps_are_included(
     dashboards = subject["items"]
     assert dashboards
     assert len(dashboards) == len(raw_dashboards)
+
+    dashboards_config = grafana_default_values["sidecar"]["dashboards"]
+    label = dashboards_config["label"]
+    label_value = dashboards_config["labelValue"]
 
     for dashboard in dashboards:
         data = dashboard["data"]
@@ -48,7 +53,7 @@ def test_expected_dashboard_config_maps_are_included(
         assert labels["app.kubernetes.io/name"] == chart_name
         assert labels["app.kubernetes.io/version"] == app_version
         assert labels["helm.sh/chart"] == f"{chart_name}-{chart_version}"
-        assert labels["grafana_dashboard"] == ""
+        assert labels[label] == label_value
 
 
 def test_label_and_label_value_can_be_configured(
