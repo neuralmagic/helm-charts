@@ -33,7 +33,7 @@
         "url": {
           "default": "http://nm-vllm-prometheus-server/",
           "description": "The URL to use for the Grafana prometheus datasource",
-          "type": "string"
+          "type": ["null", "string"]
         }
       },
       "type": "object"

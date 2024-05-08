@@ -75,3 +75,34 @@ Get the label value used by grafana to identify datasource config maps
 {{- /* intentionally blank because grafana default is "" */ -}}
 {{- end -}}
 {{- end }}
+
+{{/*
+Template for calculating the prometheus server name. Taken from prometheus chart:
+https://github.com/prometheus-community/helm-charts/blob/26ff0a752b8f1864e1a6bd2d7e68981e0784cb77/charts/prometheus/templates/_helpers.tpl#L87-L98
+*/}}
+{{- define "nm-vllm-production-monitoring._prometheusServerName" -}}
+{{- if ((.Values.prometheus).server).fullnameOverride -}}
+{{- .Values.prometheus.server.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default "prometheus" (.Values.prometheus).nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name ((.Values.prometheus).server).name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name ((.Values.prometheus).server).name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Get the URL that the grafana datasource should use to reach prometheus
+*/}}
+{{- define "nm-vllm-production-monitoring.grafanaDatasourceUrl" -}}
+{{- if (.Values.datasource).url -}}
+{{- .Values.datasource.url -}}
+{{- else if .Values.prometheus }}
+{{- printf "http://%s/" (include "nm-vllm-production-monitoring._prometheusServerName" $) -}}
+{{- else -}}
+{{- /* Default imagines they've installed the prometheus chart independently */ -}}
+http://prometheus-server/
+{{- end -}}
+{{- end }}

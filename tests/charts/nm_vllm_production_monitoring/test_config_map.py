@@ -48,14 +48,16 @@ def test_static_and_default_values(
     assert datasource["isDefault"] is True
     assert datasource["name"] == "Prometheus"
     assert datasource["type"] == "prometheus"
-    datasource_values = chart_values["datasource"]
-    assert datasource["uid"] == datasource_values["uid"]
-    assert datasource["url"] == datasource_values["url"]
+    datasource_default_values = chart_values["datasource"]
+    assert datasource["uid"] == datasource_default_values["uid"]
+    expected_url = f"http://{name}-prometheus-server/"
+    assert datasource["url"] == expected_url
 
     datasource_json_data = datasource["jsonData"]
     assert datasource_json_data
-    assert datasource_json_data["httpMethod"] == datasource_values["httpMethod"]
-    assert datasource_json_data["timeInterval"] == datasource_values["timeInterval"]
+    assert datasource_json_data["httpMethod"] == datasource_default_values["httpMethod"]
+    expected_time_interval = datasource_default_values["timeInterval"]
+    assert datasource_json_data["timeInterval"] == expected_time_interval
 
 
 def test_grafana_datasources_label_and_label_value_can_be_configured(

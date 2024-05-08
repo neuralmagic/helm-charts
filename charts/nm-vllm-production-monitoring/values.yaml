@@ -19,7 +19,7 @@ datasource:
   uid: prometheus
 
   # -- The URL to use for the Grafana prometheus datasource.
-  url: http://nm-vllm-prometheus-server/
+  url: null
 
 # -- (object) Configuration for the Grafana deployment
 # @default -- --

@@ -20,4 +20,4 @@ data:
       name: {{ .Values.datasource.name }}
       type: prometheus
       uid: {{ .Values.datasource.uid }}
-      url: {{ .Values.datasource.url }}
+      url: {{ template "nm-vllm-production-monitoring.grafanaDatasourceUrl" $ }}
