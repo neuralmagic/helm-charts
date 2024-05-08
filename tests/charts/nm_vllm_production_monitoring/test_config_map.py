@@ -136,6 +136,18 @@ def test_datasource_http_method_can_be_configured(helm_runner: HelmRunner) -> No
     assert actual_http_method == http_method
 
 
+def test_datasource_name_can_be_configured(helm_runner: HelmRunner) -> None:
+    name = "POST"
+    subject = render_subject(
+        helm_runner=helm_runner,
+        values={"datasource": {"name": name}},
+    )
+    datasource_yaml_unparsed = subject["data"]["datasource.yaml"]
+    datasource_yaml = yaml.safe_load(datasource_yaml_unparsed)
+    datasource = datasource_yaml["datasources"][0]
+    assert datasource["name"] == name
+
+
 def test_datasource_time_interval_can_be_configured(helm_runner: HelmRunner) -> None:
     time_interval = "POST"
     subject = render_subject(

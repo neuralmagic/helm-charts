@@ -20,10 +20,11 @@ The following options are supported. See [values.yaml](/charts/nm-vllm-productio
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | datasource | object | -- | Configuration for the datasource connecting prometheus and grafana. |
-| datasource.httpMethod | string | `"POST"` | The HTTP method to use for the Grafana datasource. |
+| datasource.httpMethod | string | `"POST"` | The HTTP method to use for the Grafana prometheus datasource. |
+| datasource.name | string | `"Prometheus"` | The name to use for the Grafana prometheus datasource. |
 | datasource.timeInterval | string | `"15s"` | The time interval with which Grafana should scrape the prometheus datasource. |
-| datasource.uid | string | `"prometheus"` | The uid to use for the Grafana datasource. |
-| datasource.url | string | `"http://nm-vllm-prometheus-server/"` | The URL to use for the Grafana datasource. |
+| datasource.uid | string | `"prometheus"` | The uid to use for the Grafana prometheus datasource. |
+| datasource.url | string | `"http://nm-vllm-prometheus-server/"` | The URL to use for the Grafana prometheus datasource. |
 | grafana | object | -- | Configuration for the Grafana deployment |
 | grafana.sidecar | object | -- | Allows for deployment of containers alongside the Grafana container for purposes such as importing dashboards and datasources. |
 | grafana.sidecar.dashboards | object | -- | Enables the automatic import and management of Grafana dashboards from ConfigMaps or secrets. |

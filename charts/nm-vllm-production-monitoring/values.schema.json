@@ -7,7 +7,12 @@
       "properties": {
         "httpMethod": {
           "default": "POST",
-          "description": "The HTTP method to use for the Grafana datasource",
+          "description": "The HTTP method to use for the Grafana prometheus datasource",
+          "type": "string"
+        },
+        "name": {
+          "default": "Prometheus",
+          "description": "The name to be given to the Grafana prometheus datasource.",
           "type": "string"
         },
         "timeInterval": {
@@ -17,12 +22,12 @@
         },
         "uid": {
           "default": "prometheus",
-          "description": "The uid to use for the Grafana datasource",
+          "description": "The uid to use for the Grafana prometheus datasource",
           "type": "string"
         },
         "url": {
           "default": "http://nm-vllm-prometheus-server/",
-          "description": "The URL to use for the Grafana datasource",
+          "description": "The URL to use for the Grafana prometheus datasource",
           "type": "string"
         }
       },
