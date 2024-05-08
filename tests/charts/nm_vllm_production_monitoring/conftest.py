@@ -24,20 +24,6 @@ make_chart_fixtures(
 )
 
 
-def _get_dependency_values(
-    chart_dependencies: ChartDependencies,
-    dependency_name: str,
-    helm_runner: HelmRunner,
-) -> Dict:
-    dependency = chart_dependencies[dependency_name]
-    dependency_values = helm_runner.values(
-        chart=dependency_name,
-        repo=dependency.repository,
-        version=dependency.version,
-    )
-    return dependency_values
-
-
 # Cache dependency default values because they can be slow to fetch
 @pytest.fixture(scope="package")
 def nm_vllm_dependency_default_values(
@@ -63,3 +49,17 @@ def grafana_dependency_default_values(
         dependency_name="grafana",
         helm_runner=helm_runner,
     )
+
+
+def _get_dependency_values(
+    chart_dependencies: ChartDependencies,
+    dependency_name: str,
+    helm_runner: HelmRunner,
+) -> Dict:
+    dependency = chart_dependencies[dependency_name]
+    dependency_values = helm_runner.values(
+        chart=dependency_name,
+        repo=dependency.repository,
+        version=dependency.version,
+    )
+    return dependency_values
