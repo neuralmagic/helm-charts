@@ -42,3 +42,29 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 helm.sh/chart: {{ include "nm-vllm-grafana-dashboards.chart" . }}
 {{- end }}
+
+{{/*
+Get the label used by grafana to identify dashboard config maps
+*/}}
+{{- define "nm-vllm-grafana-dashboards.grafanaDashboardsLabel" -}}
+{{- if .Values.grafanaDashboardsLabelOverride -}}
+{{- .Values.grafanaDashboardsLabelOverride -}}
+{{- else if (((.Values.grafana).sidecar).dashboards).label }}
+{{- .Values.grafana.sidecar.dashboards.label -}}
+{{- else -}}
+grafana_dashboard
+{{- end -}}
+{{- end }}
+
+{{/*
+Get the label value used by grafana to identify dashboard config maps
+*/}}
+{{- define "nm-vllm-grafana-dashboards.grafanaDashboardsLabelValue" -}}
+{{- if .Values.grafanaDashboardsLabelValueOverride -}}
+{{- .Values.grafanaDashboardsLabelValueOverride -}}
+{{- else if (((.Values.grafana).sidecar).dashboards).labelValue }}
+{{- .Values.grafana.sidecar.dashboards.labelValue -}}
+{{- else -}}
+{{- /* intentionally blank because grafana default is "" */ -}}
+{{- end -}}
+{{- end }}
