@@ -47,14 +47,6 @@
                 "enabled": {
                   "description": "Enable the Grafana sidecar for datasources so the prometheus instance can be configured and used as a Grafana datasource. If disabled, the prometheus datasource must be configured manually.",
                   "type": "boolean"
-                },
-                "label": {
-                  "description": "Grafana sidecar datasource label.",
-                  "type": "string"
-                },
-                "labelValue": {
-                  "description": "Grafana sidecar datasource label value.",
-                  "type": "string"
                 }
               }
             }
