@@ -2,15 +2,6 @@ name: Release Charts
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Release version'
-        required: true
-        default: '1.2.3'
-      previousVersion:
-        description: 'Previous release version (for generating release notes)'
-        required: true
-        default: '1.2.2'
 
 jobs:
   release:
@@ -44,20 +35,3 @@ jobs:
           CR_GENERATE_RELEASE_NOTES: true
         name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
-
-      - env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN || secrets.CICD_GITHUB_PAT }}"
-          PREVIOUS_RELEASE_NAME: "v${{ inputs.previousVersion }}"
-          RELEASE_NAME: "v${{ inputs.version }}"
-        name: Add tag and release for given version
-        run: |
-          git tag -m "$RELEASE_NAME" "$RELEASE_NAME"
-          git push origin "$RELEASE_NAME"
-
-          gh release create \
-            --generate-notes \
-            --notes-start-tag "$PREVIOUS_RELEASE_NAME" \
-            --target "$GITHUB_REF" \
-            --title "$RELEASE_NAME" \
-            --verify-tag \
-            "$RELEASE_NAME"
