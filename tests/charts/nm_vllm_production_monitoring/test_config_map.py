@@ -201,6 +201,24 @@ def test_datasource_url_can_be_configured(helm_runner: HelmRunner) -> None:
     assert actual_url == url
 
 
+def test_datasource_can_be_disabled(helm_runner: HelmRunner) -> None:
+    for datasource_enabled in [False, True]:
+        resources = helm_runner.template(
+            chart="nm-vllm-production-monitoring",
+            name="nm-vllm",
+            values=[{"datasource": {"enabled": datasource_enabled}}],
+        )
+        config_map_names = [
+            resource["metadata"]["name"]
+            for resource in resources
+            if resource["kind"] == "ConfigMap"
+        ]
+        assert (
+            "nm-vllm-nm-vllm-production-monitoring-grafana-datasource"
+            in config_map_names
+        ) is datasource_enabled
+
+
 def render_subject(
     helm_runner: HelmRunner,
     name: str = "name-given-to-the-release",

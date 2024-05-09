@@ -2,6 +2,9 @@
 # @default -- --
 datasource:
 
+  # -- Toggles whether or not a prometheus datasource will be configured in grafana.
+  enabled: true
+
   # -- The HTTP method to use for prometheus datasource configured in grafana.
   httpMethod: POST
 

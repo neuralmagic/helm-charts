@@ -5,6 +5,11 @@
     "datasource": {
       "description": "Configuration for the datasource connecting prometheus and grafana.",
       "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Toggles whether or not a prometheus datasource will be configured in grafana.",
+          "type": "boolean"
+        },
         "httpMethod": {
           "default": "POST",
           "description": "The HTTP method to use for the prometheus datasource configured in grafana",

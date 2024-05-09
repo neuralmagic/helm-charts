@@ -20,6 +20,7 @@ The following options are supported. See [values.yaml](/charts/nm-vllm-productio
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | datasource | object | -- | Configuration for the datasource connecting prometheus and grafana. |
+| datasource.enabled | bool | `true` | Toggles whether or not a prometheus datasource will be configured in grafana. |
 | datasource.httpMethod | string | `"POST"` | The HTTP method to use for prometheus datasource configured in grafana. |
 | datasource.isDefault | bool | `true` | Toggles whether or not the prometheus datasource configured in grafana should be the default grafana datasource. |
 | datasource.name | string | `"Prometheus"` | The name to use for the prometheus datasource configured in grafana. |

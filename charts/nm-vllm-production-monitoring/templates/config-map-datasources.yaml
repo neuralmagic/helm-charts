@@ -2,6 +2,7 @@
   A lot of inspiration taken from:
     - https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/templates/grafana/configmaps-datasources.yaml
 */ -}}
+{{- if .Values.datasource.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -21,3 +22,4 @@ data:
       type: prometheus
       uid: {{ .Values.datasource.uid }}
       url: {{ template "nm-vllm-production-monitoring.grafanaDatasourceUrl" $ }}
+{{- end }}
