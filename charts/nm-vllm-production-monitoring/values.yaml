@@ -2,39 +2,43 @@
 # @default -- --
 datasource:
 
-  # -- The HTTP method to use for the Grafana prometheus datasource.
+  # -- The HTTP method to use for prometheus datasource configured in grafana.
   httpMethod: POST
 
-  # -- Toggles whether or not the Grafana prometheus datasource should be the
-  # default Grafana datasource.
+  # -- Toggles whether or not the prometheus datasource configured in grafana
+  # should be the default grafana datasource.
   isDefault: true
 
-  # -- The name to use for the Grafana prometheus datasource.
+  # -- The name to use for the prometheus datasource configured in grafana.
   name: Prometheus
 
-  # -- The time interval with which Grafana should scrape the prometheus datasource.
+  # -- The time interval with which grafana should scrape the prometheus datasource.
   timeInterval: 15s
 
-  # -- The uid to use for the Grafana prometheus datasource.
+  # -- The uid to use for the prometheus datasource configured in grafana.
   uid: prometheus
 
-  # -- The URL to use for the Grafana prometheus datasource.
+  # -- The URL to use for the prometheus datasource configured in grafana.
   url: null
 
-# -- (object) Configuration for the Grafana deployment
+# -- (object) Configuration for the grafana sub-chart
 # @default -- --
 grafana:
 
-  # -- Allows for deployment of containers alongside the Grafana container
+  # -- Toggle whether or not the grafana sub-chart is included
+  enabled: true
+
+  # -- Allows for deployment of containers alongside the grafana container
   # for purposes such as importing dashboards and datasources.
   # @default -- --
   sidecar:
 
-    # -- Enables the automatic import and management of Grafana dashboards from ConfigMaps or secrets.
+    # -- Enables the automatic import and management of grafana dashboards from
+    # ConfigMaps or secrets.
     # @default -- --
     dashboards:
 
-      # -- Enable the Grafana sidecar for dashboards so nm-vllm dashboards can
+      # -- Enable the grafana sidecar for dashboards so nm-vllm dashboards can
       # be detected and loaded. If disabled, dashboards must be loaded manually.
       enabled: true
 
@@ -42,21 +46,21 @@ grafana:
     # @default -- --
     datasources:
 
-      # -- Enable the Grafana sidecar for datasources so the prometheus
-      # instance can be configured and used as a Grafana datasource. If disabled,
+      # -- Enable the grafana sidecar for datasources so the prometheus
+      # instance can be configured and used as a grafana datasource. If disabled,
       # the prometheus datasource must be configured manually.
       enabled: true
 
 
-# -- Label used by Grafana's sidecar for datasources to identify config
-# maps with datasources that should be added to Grafana. Should match the value
-# of the `sidecar.datasources.label` configuration in the Grafana chart.
+# -- Label used by grafana's sidecar for datasources to identify config
+# maps with datasources that should be added to grafana. Should match the value
+# of the `sidecar.datasources.label` configuration in the grafana chart.
 grafanaDatasourcesLabelOverride: null
 
 
-# -- Label value used by Grafana's sidecar for datasources to identify config
-# maps with datasources that should be added to Grafana. Should match the value
-# of the `sidecar.datasources.labelValue` configuration in the Grafana chart.
+# -- Label value used by grafana's sidecar for datasources to identify config
+# maps with datasources that should be added to grafana. Should match the value
+# of the `sidecar.datasources.labelValue` configuration in the grafana chart.
 grafanaDatasourcesLabelValueOverride: null
 
 # -- (object) Configuration for the nm-vllm server deployment and service.
@@ -65,3 +69,16 @@ nm-vllm:
   podAnnotations:
       # -- Enables prometheus to find pod to scrape
     prometheus.io/scrape: "true"
+
+# -- (object) Configuration for the nm-vllm-grafana-dashboards chart
+nm-vllm-grafana-dashboards:
+
+  # -- Toggle whether or not the nm-vllm-grafana-dashboards sub-chart is included
+  enabled: true
+
+# -- (object) Configuration for the prometheus sub-chart
+# @default -- --
+prometheus:
+
+  # -- Toggle whether or not the prometheus sub-chart is included
+  enabled: true

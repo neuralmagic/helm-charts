@@ -7,51 +7,57 @@
       "properties": {
         "httpMethod": {
           "default": "POST",
-          "description": "The HTTP method to use for the Grafana prometheus datasource",
+          "description": "The HTTP method to use for the prometheus datasource configured in grafana",
           "type": "string"
         },
         "isDefault": {
           "default": true,
-          "description": "Toggles whether or not the Grafana prometheus datasource should be the default Grafana datasource.",
+          "description": "Toggles whether or not the prometheus datasource configured in grafana should be the default grafana datasource.",
           "type": "boolean"
         },
         "name": {
           "default": "Prometheus",
-          "description": "The name to be given to the Grafana prometheus datasource.",
+          "description": "The name to be given to the prometheus datasource configured in grafana.",
           "type": "string"
         },
         "timeInterval": {
           "default": "15s",
-          "description": "The interval with which Grafana should scrape the prometheus datasource",
+          "description": "The interval with which grafana should scrape the prometheus datasource",
           "type": "string"
         },
         "uid": {
           "default": "prometheus",
-          "description": "The uid to use for the Grafana prometheus datasource",
+          "description": "The uid to use for the prometheus datasource configured in grafana",
           "type": "string"
         },
         "url": {
           "default": "http://nm-vllm-prometheus-server/",
-          "description": "The URL to use for the Grafana prometheus datasource",
+          "description": "The URL to use for the prometheus datasource configured in grafana",
           "type": ["null", "string"]
         }
       },
       "type": "object"
     },
     "grafana": {
-      "description": "Configuration for the Grafana deployment",
+      "description": "Configuration for the grafana sub-chart",
       "type": "object",
       "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Toggle whether or not the grafana sub-chart is included",
+          "type": "boolean"
+        },
         "sidecar": {
-          "description": "Allows for deployment of containers alongside the Grafana container for purposes such as importing dashboards and datasources.",
+          "description": "Allows for deployment of containers alongside the grafana container for purposes such as importing dashboards and datasources.",
           "type": "object",
           "properties": {
             "dashboards": {
-              "description": "Enables the automatic import and management of Grafana dashboards from ConfigMaps or secrets.",
+              "description": "Enables the automatic import and management of grafana dashboards from ConfigMaps or secrets.",
               "type": "object",
               "properties": {
                 "enabled": {
-                  "description": "Enable the Grafana sidecar for dashboards so nm-vllm dashboards can be detected and loaded. If disabled, dashboards must be loaded manually.",
+                  "default": true,
+                  "description": "Enable the grafana sidecar for dashboards so nm-vllm dashboards can be detected and loaded. If disabled, dashboards must be loaded manually.",
                   "type": "boolean"
                 }
               }
@@ -61,7 +67,8 @@
               "type": "object",
               "properties": {
                 "enabled": {
-                  "description": "Enable the Grafana sidecar for datasources so the prometheus instance can be configured and used as a Grafana datasource. If disabled, the prometheus datasource must be configured manually.",
+                  "default": true,
+                  "description": "Enable the grafana sidecar for datasources so the prometheus instance can be configured and used as a grafana datasource. If disabled, the prometheus datasource must be configured manually.",
                   "type": "boolean"
                 }
               }
@@ -71,11 +78,11 @@
       }
     },
     "grafanaDatasourcesLabelOverride": {
-      "description": "Label used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.label` configuration in the Grafana chart.",
+      "description": "Label used by grafana's sidecar for datasources to identify config maps with datasources that should be added to grafana. Should match the value of the `sidecar.datasources.label` configuration in the grafana chart.",
       "type": ["null", "string"]
     },
     "grafanaDatasourcesLabelValueOverride": {
-      "description": "Label value used by Grafana's sidecar for datasources to identify config maps with datasources that should be added to Grafana. Should match the value of the `sidecar.datasources.labelValue` configuration in the Grafana chart.",
+      "description": "Label value used by grafana's sidecar for datasources to identify config maps with datasources that should be added to grafana. Should match the value of the `sidecar.datasources.labelValue` configuration in the grafana chart.",
       "type": ["null", "string"]
     },
     "nm-vllm": {
@@ -92,6 +99,28 @@
               "type": "string"
             }
           }
+        }
+      }
+    },
+    "nm-vllm-grafana-dashboards": {
+      "description": "Configuration for the nm-vllm-grafana-dashboards sub-chart",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Toggle whether or not the nm-vllm-grafana-dashboards sub-chart is included",
+          "type": "boolean"
+        }
+      }
+    },
+    "prometheus": {
+      "description": "Configuration for the prometheus sub-chart",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Toggle whether or not the prometheus sub-chart is included",
+          "type": "boolean"
         }
       }
     }
