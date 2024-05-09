@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from pytest_helm_templates import HelmRunner
 
@@ -13,12 +13,8 @@ def test_expected_dashboard_config_maps_are_included(
     raw_dashboards: Dict[str, str],
 ) -> None:
     name = "name-given-to-the-release"
-    subject = render_subject(helm_runner=helm_runner, name=name)
+    dashboards = render_subjects(helm_runner=helm_runner, name=name)
 
-    assert subject["apiVersion"] == "v1"
-    assert subject["kind"] == "ConfigMapList"
-
-    dashboards = subject["items"]
     assert dashboards
     assert len(dashboards) == len(raw_dashboards)
 
@@ -61,14 +57,14 @@ def test_label_and_label_value_can_be_configured(
 ) -> None:
     label = "grafana_dashboard"
     label_value = "grafana_dashboard_value"
-    subject = render_subject(
+    dashboards = render_subjects(
         helm_runner=helm_runner,
         values={
             "grafanaDashboardsLabelOverride": label,
             "grafanaDashboardsLabelValueOverride": label_value,
         },
     )
-    dashboards = subject["items"]
+    assert dashboards
     for dashboard in dashboards:
         labels = dashboard["metadata"]["labels"]
         assert labels[label] == label_value
@@ -79,7 +75,7 @@ def test_label_and_label_value_can_take_values_from_grafana_values(
 ) -> None:
     label = "grafana_dashboard_label"
     label_value = "grafana_dashboard_label_value"
-    subject = render_subject(
+    dashboards = render_subjects(
         helm_runner=helm_runner,
         values={
             "grafana": {
@@ -92,7 +88,7 @@ def test_label_and_label_value_can_take_values_from_grafana_values(
             },
         },
     )
-    dashboards = subject["items"]
+    assert dashboards
     for dashboard in dashboards:
         labels = dashboard["metadata"]["labels"]
         assert labels[label] == label_value
@@ -102,7 +98,11 @@ def test_label_and_label_value_defaults_match_grafana_defaults(
     grafana_default_values: Dict,
     helm_runner: HelmRunner,
 ) -> None:
-    subject = render_subject(
+    grafana_dashboards_config = grafana_default_values["sidecar"]["dashboards"]
+    label = grafana_dashboards_config["label"]
+    label_value = grafana_dashboards_config["labelValue"]
+
+    dashboards = render_subjects(
         helm_runner=helm_runner,
         # Make sure we don't get the values from grafana values
         values={
@@ -117,27 +117,21 @@ def test_label_and_label_value_defaults_match_grafana_defaults(
         },
     )
 
-    dashboards_config = grafana_default_values["sidecar"]["dashboards"]
-    label = dashboards_config["label"]
-    label_value = dashboards_config["labelValue"]
-
-    dashboards = subject["items"]
+    assert dashboards
     for dashboard in dashboards:
         labels = dashboard["metadata"]["labels"]
         assert labels[label] == label_value
 
 
-def render_subject(
+def render_subjects(
     helm_runner: HelmRunner,
     name: str = "name-given-to-the-release",
     values: Optional[Dict] = None,
-) -> Dict:
+) -> List[Dict[str, Any]]:
     manifests = helm_runner.template(
         chart="nm-vllm-grafana-dashboards",
         name=name,
         show_only=["templates/config-map-list.yaml"],
         values=[values] if values else [],
     )
-    subject = manifests[0]
-    assert subject["kind"] == "ConfigMapList"
-    return subject
+    return [manifest for manifest in manifests if manifest.get("kind") == "ConfigMap"]
