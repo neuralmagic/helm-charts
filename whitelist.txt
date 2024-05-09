@@ -1,4 +1,6 @@
 conftest
+datasource
+datasources
 globals
 joinpath
 liveness
@@ -6,3 +8,6 @@ loadbalancer
 normpath
 repo
 tolerations
+uid
+unparsed
+vllm

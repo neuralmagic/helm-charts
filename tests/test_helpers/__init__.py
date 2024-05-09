@@ -1,10 +1,25 @@
 import json
+from dataclasses import dataclass, field
 from os import path
 from pathlib import Path
-from typing import Dict
+from typing import Dict, List, Optional
 
 import pytest
 import yaml
+from pytest_helm_templates import HelmRunner
+
+
+@dataclass
+class ChartDependency:
+    name: str
+    repository: str
+    alias: Optional[str] = None
+    condition: Optional[str] = None
+    tags: List[str] = field(default_factory=list)
+    version: Optional[str] = None
+
+
+ChartDependencies = Dict[str, ChartDependency]
 
 
 def charts_path() -> str:
@@ -15,6 +30,23 @@ def charts_path() -> str:
 
 def chart_path(chart_name: str) -> str:
     return f"{charts_path()}/{chart_name}"
+
+
+def get_chart_dependencies(chart_yaml: Dict) -> ChartDependencies:
+    if "dependencies" not in chart_yaml:
+        return {}
+
+    return {
+        dependency["name"]: ChartDependency(
+            alias=dependency.get("alias"),
+            condition=dependency.get("condition"),
+            name=dependency["name"],
+            repository=dependency["repository"],
+            tags=dependency.get("tags", []),
+            version=dependency.get("version"),
+        )
+        for dependency in chart_yaml["dependencies"]
+    }
 
 
 def get_chart_yaml(chart_name: str) -> Dict:
@@ -54,6 +86,12 @@ def make_chart_fixtures(
     conftest_globals["app_version"] = app_version
 
     @pytest.fixture(scope="package")
+    def chart_dependencies(chart_yaml: Dict) -> ChartDependencies:
+        return get_chart_dependencies(chart_yaml)
+
+    conftest_globals["chart_dependencies"] = chart_dependencies
+
+    @pytest.fixture(scope="package")
     def chart_name(chart_yaml: Dict) -> str:
         _chart_name = chart_yaml["name"]
         assert isinstance(_chart_name, str)
@@ -86,3 +124,13 @@ def make_chart_fixtures(
         return get_chart_values_schema(chart_dir_name)
 
     conftest_globals["chart_values_schema"] = chart_values_schema
+
+    @pytest.fixture(scope="package")
+    def chart_computed_values(chart_name: str, helm_runner: HelmRunner) -> Dict:
+        return helm_runner.computed_values(chart=chart_name)
+
+    conftest_globals["chart_computed_values"] = chart_computed_values
+
+
+def make_helm_runner() -> HelmRunner:
+    return HelmRunner(cwd=charts_path())

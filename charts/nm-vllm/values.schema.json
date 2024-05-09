@@ -60,6 +60,7 @@
     },
     "modelName": {
       "description": "The name of the model to serve",
+      "pattern": ".+",
       "examples": [
         "mistralai/Mistral-7B-v0.1"
       ],
