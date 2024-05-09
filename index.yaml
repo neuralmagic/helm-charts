@@ -68,6 +68,33 @@ entries:
   nm-vllm-production-monitoring:
   - apiVersion: v2
     appVersion: v0.1.0
+    created: "2024-05-09T20:58:39.185647632Z"
+    dependencies:
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 7.3.9
+    - name: nm-vllm
+      repository: https://helm.neuralmagic.com
+      version: 0.1.2
+    - condition: nm-vllm-grafana-dashboards.enabled
+      name: nm-vllm-grafana-dashboards
+      repository: https://helm.neuralmagic.com
+      version: 1.0.1
+    - condition: prometheus.enabled
+      name: prometheus
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 25.12.0
+    description: 'A Helm chart for nm-vllm server deployment with production monitoring
+      additions including prometheus and grafana. '
+    digest: d3b9a68cf29aad2b2b47418a56296a3780b91e238198971481bf3e0a81e3c8ed
+    name: nm-vllm-production-monitoring
+    type: application
+    urls:
+    - https://github.com/neuralmagic/helm-charts/releases/download/nm-vllm-production-monitoring-0.1.0/nm-vllm-production-monitoring-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
+    appVersion: v0.1.0
     created: "2024-05-03T20:54:11.910554847Z"
     dependencies:
     - name: nm-vllm
@@ -81,4 +108,4 @@ entries:
     urls:
     - https://github.com/neuralmagic/helm-charts/releases/download/nm-vllm-production-monitoring-0.0.1/nm-vllm-production-monitoring-0.0.1.tgz
     version: 0.0.1
-generated: "2024-05-09T18:32:22.333884817Z"
+generated: "2024-05-09T20:58:39.185664063Z"
