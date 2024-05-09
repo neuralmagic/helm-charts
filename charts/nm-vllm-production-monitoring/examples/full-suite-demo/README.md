@@ -1,0 +1,93 @@
+# Full Suite Demo
+
+This example demonstrates the values required to use the
+`nm-vllm-production-monitoring` chart for demo and evaluation purposes to
+deploy the following components:
+
+- `nm-vllm` with:
+  - `modelName` of `TheBloke/Mistral-7B-Instruct-v0.2-GPTQ`
+    - Since this model is quantized using GPTQ, extra arguments are also given
+      to the vLLM OpenAI API server
+  - `nodeSelector` configured to deploy the pod to a host with a
+    `NVIDIA-A100-SXM4-40GB` GPU
+  - `resources` configured to deploy the pod with:
+    - `4 cpus`
+    - `16Gi memory`
+    - `1 nvidia.com/gpu`
+- `grafana` with:
+  - A **static**, **plain-text**, and **insecure** `adminPassword` for ease of access
+    - **Do not use this chart for insecure deployments!**
+  - A `service.type` of `LoadBalancer` for ease of access
+- `prometheus` with:
+  - `alertmanager` disabled for a more minimal deployment
+  - `prometheus-node-exporter` disabled for a more minimal deployment
+  - `server.persistentVolume` disabled for ease of deployment / demonstration
+  - `server.service.type` of `LoadBalancer` for ease of access
+
+## Usage
+
+### Using Neural Magic Helm Repository
+
+```bash
+# Add Neural Magic Helm repository
+helm repo add neuralmagic https://helm.neuralmagic.com
+
+# Install nm-vllm-production-monitoring chart using `full-suite-demo` example values
+helm install nm-vllm nm-vllm-production-monitoring \
+  -f https://raw.githubusercontent.com/neuralmagic/helm-charts/main/charts/nm-vllm-production-monitoring/examples/full-suite-demo/values.yaml
+```
+
+### Using `helm-charts` git repository
+
+```bash
+# Clone Neural Magic helm-charts git repository
+git clone https://github.com/neuralmagic/helm-charts.git
+
+# Install nm-vllm chart using basic example values
+cd helm-charts
+helm install nm-vllm charts/nm-vllm-production-monitoring \
+  -f charts/nm-vllm-production-monitoring/examples/full-suite-demo/values.yaml
+```
+
+## Values
+
+The content of `values.yaml` is included in full below, but the `values.yaml`
+file is also available [here](./values.yaml).
+
+```yaml
+grafana:
+  adminPassword: password
+  service:
+    type: LoadBalancer
+
+nm-vllm:
+  apiServer:
+    extraArgs:
+      - --dtype
+      - float16
+
+  modelName: TheBloke/Mistral-7B-Instruct-v0.2-GPTQ
+
+  nodeSelector:
+    nvidia.com/gpu.product: NVIDIA-A100-SXM4-40GB
+
+  resources:
+    limits:
+      cpu: 4
+      memory: 16Gi
+      nvidia.com/gpu: 1
+
+prometheus:
+  alertmanager:
+    enabled: false
+  prometheus-node-exporter:
+    enabled: false
+  server:
+    global:
+      evaluation_interval: 30s
+      scrape_interval: 10s
+    persistentVolume:
+      enabled: false
+    service:
+      type: LoadBalancer
+```
