@@ -21,4 +21,4 @@ description: |
   additions including prometheus and grafana.
 name: nm-vllm-production-monitoring
 type: application
-version: 0.0.1
+version: 0.1.0
