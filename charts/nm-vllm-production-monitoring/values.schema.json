@@ -126,6 +126,26 @@
           "default": true,
           "description": "Toggle whether or not the prometheus sub-chart is included",
           "type": "boolean"
+        },
+        "server": {
+          "description": "Configuration for the prometheus server",
+          "properties": {
+            "global": {
+              "description": "Global configuration for the prometheus server",
+              "properties": {
+                "evaluation_interval": {
+                  "description": "How frequently prometheus evaluates rules.",
+                  "type": "string"
+                },
+                "scrape_interval": {
+                  "description": "How frequently prometheus scrapes targets.",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
         }
       }
     }

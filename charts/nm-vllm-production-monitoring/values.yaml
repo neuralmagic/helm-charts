@@ -85,3 +85,15 @@ prometheus:
 
   # -- Toggle whether or not the prometheus sub-chart is included
   enabled: true
+
+  # -- (object) Configuration for the prometheus server
+  # @default -- --
+  server:
+
+    global:
+
+      # -- How frequently prometheus evaluates rules
+      evaluation_interval: 30s
+
+      # -- How frequently prometheus scrapes targets
+      scrape_interval: 10s

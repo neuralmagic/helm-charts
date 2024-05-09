@@ -83,9 +83,6 @@ prometheus:
   prometheus-node-exporter:
     enabled: false
   server:
-    global:
-      evaluation_interval: 30s
-      scrape_interval: 10s
     persistentVolume:
       enabled: false
     service:

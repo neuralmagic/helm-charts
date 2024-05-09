@@ -42,3 +42,6 @@ The following options are supported. See [values.yaml](/charts/nm-vllm-productio
 | nm-vllm.podAnnotations."prometheus.io/scrape" | string | `"true"` | Enables prometheus to find pod to scrape |
 | prometheus | object | -- | Configuration for the prometheus sub-chart |
 | prometheus.enabled | bool | `true` | Toggle whether or not the prometheus sub-chart is included |
+| prometheus.server | object | -- | Configuration for the prometheus server |
+| prometheus.server.global.evaluation_interval | string | `"30s"` | How frequently prometheus evaluates rules |
+| prometheus.server.global.scrape_interval | string | `"10s"` | How frequently prometheus scrapes targets |
