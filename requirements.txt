@@ -44,7 +44,7 @@ safety==2.3.4
 toml==0.10.2
 types-PyYAML==6.0.12.20240311
 typing_extensions==4.10.0
-urllib3==2.2.1
+urllib3==2.2.2
 virtualenv==20.25.1
 watchdog==4.0.0
 yamllint==1.35.1
